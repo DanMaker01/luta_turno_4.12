@@ -33,7 +33,7 @@ class Movement:
         coluna = self.ESTADOS_BASE.index(estado_final)
         n = self.MATRIZ_TRANSICAO_BASE[linha][coluna]
         menor_n = 999
-        
+
         if  n > 0: # se houver transicao direta
             sequencia = self.add_estado_n_vezes(sequencia, estado_inicial, n)
             sequencia.append(estado_final)
@@ -44,7 +44,7 @@ class Movement:
                  seq2 = self.get_menor_sequencia(estado, estado_final)
                  if len(seq2) < menor_n:
                     menor_n = len(seq2)
-                    sequencia = seq2
+                    sequencia = seq2#
             
 
 
