@@ -26,30 +26,34 @@ class Movement:
                 sequencia.append(estado)
         return sequencia
 
+    def verifica_distancia(self, estado_inicial, estado_final):
+        return Movement.MATRIZ_TRANSICAO_BASE[estado_inicial][estado_final]
     
     def get_menor_sequencia(self, estado_inicial, estado_final):
         sequencia = []
-        linha = self.ESTADOS_BASE.index(estado_inicial)
-        coluna = self.ESTADOS_BASE.index(estado_final)
-        n = self.MATRIZ_TRANSICAO_BASE[linha][coluna]
-        menor_n = 999
-
-        if  n > 0: # se houver transicao direta
-            sequencia = self.add_estado_n_vezes(sequencia, estado_inicial, n)
+        distancia_inicial_final = self.verifica_distancia(estado_inicial, estado_final)
+        
+        if (distancia_inicial_final > 0): #dist > 0, transição direta.
+            sequencia = self.add_estado_n_vezes(sequencia, estado_inicial, distancia_inicial_final)
             sequencia.append(estado_final)
             return sequencia
-        else: #senao, abrir possibilidades recursivamente e testar se há transicao direta de segundo nivel
-            print("transicao indireta")
-            for estado in self.ESTADOS_BASE:
-                 seq2 = self.get_menor_sequencia(estado, estado_final)
-                 if len(seq2) < menor_n:
-                    menor_n = len(seq2)
-                    sequencia = seq2#
-            
+        else: #dist = 0, transição indireta
+            menor_distancia_parcial_final = 999
+            sequencia_b = []
+            for estado_parcial in self.ESTADOS_BASE:
+                distancia_inicial_parcial = self.verifica_distancia(estado_inicial, estado_parcial)
+                if (distancia_inicial_parcial > 0):
+                    distancia_parcial_final = self.verifica_distancia(estado_parcial, estado_final)
+                    if(distancia_parcial_final < menor_distancia_parcial_final):
+                        sequencia_b = []
+                        menor_distancia_parcial_final = distancia_parcial_final
+                        sequencia_b = self.add_lei_n_vezes(sequencia, estado_inicial, distancia_inicial_parcial)
+                        sequencia_b.append(estado_parcial)
+# CONTINUAR
+                    
+                    
 
-
-            return sequencia
-        
+                
 
             
     MOVEMENTS = {
