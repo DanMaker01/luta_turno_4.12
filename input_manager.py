@@ -42,7 +42,7 @@ class InputManager:
                 "cima": "base_chute",
                 "baixo": "base_cavaleiro",
                 "esquerda": "base_kokutsu",
-                "direita": "base_zenkutsu"
+                "direita": "base_zenkutsu",
             },
             "Guarda": {
                 "cima": "defesa_alta",
@@ -60,12 +60,20 @@ class InputManager:
             return mapping[sequence[0]].get(sequence[1])
         return mapping.get(sequence[0])
 
+    # Check if the buffer contains a predefined sequence
     def check_sequences(self, timeline):
+        """
+        Check if the buffer contains any predefined sequences.
+
+        Args:
+            timeline (Timeline): The timeline to add the movement to.
+        """
         buffer_length = len(self.buffer)
         for sequence in self.predefined_sequences:
-            sequence_length = len(sequence)
-            for i in range(buffer_length - sequence_length + 1):
+            sequence_length = len(sequence)  # Get the length of the sequence
+            for i in range(buffer_length - sequence_length + 1):  # Check every possible sequence in the buffer
                 if self.buffer[i:i + sequence_length] == sequence:
+                    # If a sequence is found, add the corresponding movement to the timeline
                     timeline.add_movimento_to_timeline(self.sequence_to_move(sequence))
                     self.limpar_buffer()
                     return

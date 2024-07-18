@@ -23,17 +23,16 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.t = 0
-        self.intervalo_turno = 10
+        self.intervalo_turno = 40
         self.turno = 0
         self.timeline = Timeline()
 
         self.input_manager = InputManager()
 
         pygame.font.init()
-        self.font = pygame.font.SysFont(None, 36)
+        self.font = pygame.font.SysFont(None, 20)
         self.movimentos = Movement()
-        a = self.movimentos.get_menor_sequencia("parado", "zenkutsu")
-        print(a)
+        # a = self.movimentos.get_menor_sequencia("chute_frente", "zenkutsu")
 
     def run(self):
         while self.running:
@@ -82,9 +81,13 @@ class Game:
         turn_text = self.font.render(f"Turno: {self.turno}", True, (255, 255, 255))
         screen.blit(turn_text, (10, 10))
 
-        # Display self.movimentos
-        movimentos_text = self.font.render(f"Movimentos: {self.timeline.movimentos}", True, (255, 255, 255))
-        screen.blit(movimentos_text, (10, 100))
+        # Display timeline.estados_base
+        movimentos_text = self.font.render(f"Movimentos: {self.timeline.estados_base}", True, (255, 255, 255))
+        screen.blit(movimentos_text, (5, 50))
+
+        #display timeline.movimentos_a_fazer
+        movimentos_a_fazer_text = self.font.render(f"Movimentos a fazer: {self.timeline.movimentos_a_fazer}", True, (255, 255, 255))
+        screen.blit(movimentos_a_fazer_text, (5, 100))
 
 if __name__ == "__main__":
     game = Game()
