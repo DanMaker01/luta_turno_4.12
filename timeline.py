@@ -6,7 +6,7 @@ class Timeline:
         self.estados_guarda = ["guarda_parado"]
         self.movimentos_a_fazer = []
         self.movimento_classe = Movement()
-        
+        # self.flag_adicionou_movimento = False
 
     def add_base_to_timeline(self, estado_objetivo):
         self.movimentos_a_fazer = []
@@ -23,21 +23,26 @@ class Timeline:
 
     def add_guarda_to_timeline(self, estado_objetivo):
         self.movimentos_a_fazer = []
+        #IMPLEMENTAR @@@
 
+    #implementar: talvez precise adicionar um terceiro caso, se não for base nem guarda??
     def add_movimento_to_timeline(self, estado_objetivo):
-        #se dor movimento de base:
+        #se for movimento de base:
         if self.movimento_classe.MOVEMENTS[estado_objetivo][0] == 0:
             self.add_base_to_timeline( estado_objetivo)
+            # self.flag_adicionou_movimento = True
         else:#senão é movimento de guarda
             self.add_guarda_to_timeline(estado_objetivo)
-
+            # self.flag_adicionou_movimento = True
+        
     def avancar_movimentos(self):
-        #implementar
+        # ???? explicar melhor
         pass
 
-    def executar_movimentos(self):
+    def executar_movimentos(self): # transfere movimento a fazer para timeline.estados_base 
         if self.movimentos_a_fazer:
             proximo_estado = self.movimentos_a_fazer.pop(0)
             self.estados_base.append(proximo_estado)
         else:
-            pass
+            # se não houver movimentos a fazer, adiciona-se repetidamente o ultimo estado
+            self.estados_base.append(self.estados_base[-1])

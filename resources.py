@@ -1,5 +1,11 @@
 import pygame
 class ResourceLoader:
+
+    #init
+
+    def __init__(self):
+        pygame.mixer.init()
+
     @staticmethod
     def load_image(nome,path="recursos/"):
         return pygame.image.load(path+nome)

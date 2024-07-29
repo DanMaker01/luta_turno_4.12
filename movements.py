@@ -4,9 +4,10 @@
 
 class Movement:
     ESTADOS_BASE = ["base_parado","base_agachado", "base_zenkutsu",  "base_cavaleiro","base_kokutsu", "base_chute","chute_frente","chute_lateral"]
+    BASE_CENTRO_COLUNA = [127,127,127,127,64,127,85,64]
     #ESTADOS_GUARDA = ["guarda_parado", "guarda_guarda", "soco_frente", "soco_tras","def_baixo", "def_alto"]
 
-    MATRIZ_TRANSICAO_BASE = [
+    MATRIZ_TRANSICAO_BASE = [ #8x8 (numeros de estados base)
         [0,2,0,0,0,0,0,0],
         [0,0,3,2,2,3,0,0],
         [0,1,0,3,1,3,0,0],
@@ -16,16 +17,24 @@ class Movement:
         [0,0,0,0,0,1,0,0],
         [0,0,0,0,0,1,0,0]
     ]
-
+    MATRIZ_TRANSICAO_GUARDA = [ #9x9
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0]
+    ]
     
-    
-    MOVEMENTS = {
-        "base_parado": [0, 0, 0, []],
+    MOVEMENTS = { #implementar: acertar o formato padrão
+        "base_parado": ["base_parado"],
         "base_zenkutsu": [0],
         "base_kokutsu": [0],
         "base_cavaleiro": [0],
         "base_chute": [0],
-        "guarda_parado": [1, 0, 0, []],
+        "guarda_parado": ["guarda_parado"],
         "soco_frente": [1, 10, 3, ["base", "tronco", "braco"]],
         "soco_tras": [1, 17, 4, ["base", "tronco", "braco"]],
         "defesa_baixo": [3, -10, 1, ["tronco", "braco"]],
