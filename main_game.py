@@ -82,7 +82,7 @@ class Game:
         pass
 
     def avancar_turno(self):
-
+        #teste
         self.timeline.executar_movimentos()
         self.player.trocar_estado([self.timeline.estados_base[-1], self.timeline.estados_guarda[-1]])
         self.turno += 1
