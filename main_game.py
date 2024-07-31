@@ -9,6 +9,13 @@
 # com movimentação, ataque e defesa, antecipação e gingado.
 
 
+
+
+
+
+
+
+
 import pygame
 import sys
 from player import Player
@@ -17,8 +24,7 @@ from timeline import Timeline
 from resources import ResourceLoader
 from input_manager import InputManager
 
-WIDTH, HEIGHT = 1240, 600
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((Movement.WIDTH, Movement.HEIGHT))
 pygame.display.set_caption("Luta_turno")
 
 class Game:
@@ -31,26 +37,30 @@ class Game:
         ##som
         self.move_sound = self.loader.load_sound('beep.mp3')
         ##sprites
-        self.sprites_base = []
-        self.sprites_guarda = []
-        for i in self.movimentos.ESTADOS_BASE:
-            self.sprites_base.append(self.loader.load_image(i+".png"))
-        
         self.background_image = self.loader.scale_image(self.loader.load_image('background.png'), 1)
-        #to-do: deletar player_image
-        self.player_image = self.loader.scale_image(self.loader.load_image('player.png'), 0.2)
+        
+        self.sprites_base = {}
+        self.sprites_guarda = {}
+        for nome_i in self.movimentos.ESTADOS_BASE:
+            self.sprites_base[nome_i] = self.loader.scale_image(self.loader.load_image(nome_i+".png"),0.5)
+        for nome_i in self.movimentos.ESTADOS_GUARDA:
+            self.sprites_guarda[nome_i] = self.loader.scale_image(self.loader.load_image(nome_i+".png"),0.5)
+
+        # #to-do: deletar player_image
+        # self.player_image = self.loader.scale_image(self.loader.load_image('player.png'), 1)
         
         #objetos
         #implementar: na hora de criar o Player, passar imagem da base e da guarda ao invés de imagem_player
-        self.player = Player(self.player_image, 
-                             [0, HEIGHT - self.player_image.get_height()], 
-                             [Movement.MOVEMENTS["guarda_parado"], Movement.MOVEMENTS["base_parado"]])
+        self.player = Player(self.sprites_base,
+                             self.sprites_guarda, 
+                             [0, Movement.HEIGHT - self.sprites_base[Movement.ESTADOS_BASE[0]].get_height()], #altura de refernecia fixa
+                             [Movement.ESTADOS_BASE[0], Movement.ESTADOS_GUARDA[0]])
         
         
         #tempo
         self.clock = pygame.time.Clock()
         self.t = 0
-        self.intervalo_turno = 40
+        self.intervalo_turno = 2
         self.turno = 0
         self.timeline = Timeline()
 

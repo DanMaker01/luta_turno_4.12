@@ -2,8 +2,8 @@ from movements import Movement
 
 class Timeline:
     def __init__(self):
-        self.estados_base = ["base_parado"]
-        self.estados_guarda = ["guarda_parado"]
+        self.estados_base = ["base_parado"] #inicialmente o player está parado
+        self.estados_guarda = ["guarda_parado"] # inicialmente o player está parado
         self.movimentos_a_fazer = []
         self.movimento_classe = Movement()
         # self.flag_adicionou_movimento = False
@@ -39,9 +39,11 @@ class Timeline:
         # ???? explicar melhor
         pass
 
+
     def executar_movimentos(self): # transfere movimento a fazer para timeline.estados_base 
         if self.movimentos_a_fazer:
             proximo_estado = self.movimentos_a_fazer.pop(0)
+            #implementar: mudar sprite do player
             self.estados_base.append(proximo_estado)
         else:
             # se não houver movimentos a fazer, adiciona-se repetidamente o ultimo estado

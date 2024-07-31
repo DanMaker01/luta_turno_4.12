@@ -1,12 +1,25 @@
+import numpy as np
+from movements import Movement
 class Player:
-    def __init__(self, image, pos, estado_inicial):
-        self.image = image
+    def __init__(self, sprites_base, sprites_guarda, pos, estado_inicial):
+        self.sprites_base = sprites_base #dicionario
+        self.sprites_guarda = sprites_guarda # implementar @@@@
+        
         self.pos = pos
+        
         self.estado = estado_inicial
+        pass
 
     def draw(self, screen):
         #editar: desenhar base; desenhar guarda na posição em relação à base
-        screen.blit(self.image, self.pos)
+        
+        screen.blit(self.sprites_base[self.estado[0]], self.pos)
+        altura_sprite = self.sprites_base[self.estado[0]].get_height()
+
+
+        # implementar: a posição varia de acordo com a base.
+        screen.blit(self.sprites_guarda[self.estado[1]], self.pos+np.array([0, -altura_sprite]))
+        
         
 
 
@@ -14,7 +27,6 @@ class Player:
         self.estado = estado_novo
 
 
-    # def update(self):
-    #     self.estado[0] = self.estado[0]
-    #     self.estado[1] = self.estado[1]
-    #     pass
+    def update(self):
+    
+        pass

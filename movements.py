@@ -5,7 +5,10 @@
 class Movement:
     ESTADOS_BASE = ["base_parado","base_agachado", "base_zenkutsu",  "base_cavaleiro","base_kokutsu", "base_chute","chute_frente","chute_lateral"]
     BASE_CENTRO_COLUNA = [127,127,127,127,64,127,85,64]
-    #ESTADOS_GUARDA = ["guarda_parado", "guarda_guarda", "soco_frente", "soco_tras","def_baixo", "def_alto"]
+    ESTADOS_GUARDA = ["guarda_parado", "guarda_guarda", "soco_frente", "soco_tras","def_baixo", "def_alto"]
+
+    
+    WIDTH, HEIGHT = 1240, 600
 
     MATRIZ_TRANSICAO_BASE = [ #8x8 (numeros de estados base)
         [0,2,0,0,0,0,0,0],
@@ -62,9 +65,12 @@ class Movement:
         indice_estado_final = self.ESTADOS_BASE.index(estado_final)
         return self.MATRIZ_TRANSICAO_BASE[indice_estado_inicial][indice_estado_final]
     
-    def get_menor_sequencia(self, estado_inicial, estado_final):
+    def get_menor_sequencia(self, estado_inicial, estado_final): #editar: fazer recursivamente
+        if(estado_inicial == estado_final):
+            return [estado_inicial]
         sequencia = []
         distancia_inicial_final = self.verifica_distancia(estado_inicial, estado_final)
+        print("distancia_inicial_final = ",distancia_inicial_final)
         indice_estado_inicial = self.ESTADOS_BASE.index(estado_inicial)
         indice_estado_final = self.ESTADOS_BASE.index(estado_final)
 
@@ -86,6 +92,7 @@ class Movement:
                         menor_distancia_total = distancia_total_candidata
                         parcial_utilizado = self.ESTADOS_BASE[i]
                         sequencia_b = self.get_menor_sequencia(self.ESTADOS_BASE[i], estado_final)
+                        # print("sequencia_b", sequencia_b)
                     
                 else:
                     pass
