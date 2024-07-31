@@ -19,19 +19,19 @@
 import pygame
 import sys
 from player import Player
-from movements import Movement
+from movements import Database
 from timeline import Timeline
 from resources import ResourceLoader
 from input_manager import InputManager
 
-screen = pygame.display.set_mode((Movement.WIDTH, Movement.HEIGHT))
+screen = pygame.display.set_mode((Database.WIDTH, Database.HEIGHT))
 pygame.display.set_caption("Luta_turno")
 
 class Game:
     def __init__(self):
         self.running = True
         #database
-        self.movimentos = Movement() #editar: Movement vai virar Base de Dados
+        self.movimentos = Database() #editar: Database vai virar Base de Dados
         #resources
         self.loader = ResourceLoader()
         ##som
@@ -53,8 +53,8 @@ class Game:
         #implementar: na hora de criar o Player, passar imagem da base e da guarda ao invés de imagem_player
         self.player = Player(self.sprites_base,
                              self.sprites_guarda, 
-                             [0, Movement.HEIGHT - self.sprites_base[Movement.ESTADOS_BASE[0]].get_height()], #altura de refernecia fixa
-                             [Movement.ESTADOS_BASE[0], Movement.ESTADOS_GUARDA[0]])
+                             [0, Database.HEIGHT - self.sprites_base[Database.ESTADOS_BASE[0]].get_height()], #altura de refernecia fixa
+                             [Database.ESTADOS_BASE[0], Database.ESTADOS_GUARDA[0]])
         
         
         #tempo

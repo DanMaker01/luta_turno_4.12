@@ -1,11 +1,11 @@
-from movements import Movement
+from movements import Database
 
 class Timeline:
     def __init__(self):
         self.estados_base = ["base_parado"] #inicialmente o player está parado
         self.estados_guarda = ["guarda_parado"] # inicialmente o player está parado
         self.movimentos_a_fazer = []
-        self.movimento_classe = Movement()
+        self.movimento_classe = Database()
         # self.flag_adicionou_movimento = False
 
     def add_base_to_timeline(self, estado_objetivo):
