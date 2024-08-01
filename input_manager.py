@@ -64,9 +64,6 @@ class InputManager:
     def check_sequences(self, timeline):
         """
         Check if the buffer contains any predefined sequences.
-
-        Args:
-            timeline (Timeline): The timeline to add the movement to.
         """
         buffer_length = len(self.buffer)
         for sequence in self.predefined_sequences:

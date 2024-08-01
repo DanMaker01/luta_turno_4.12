@@ -1,5 +1,5 @@
 import numpy as np
-from movements import Database
+from database import Database
 class Player:
     def __init__(self, sprites_base, sprites_guarda, pos, estado_inicial):
         self.sprites_base = sprites_base #dicionario

@@ -14,7 +14,7 @@
 import pygame
 import sys
 from player import Player
-from movements import Database
+from database import Database
 from timeline import Timeline
 from resources import ResourceLoader
 from input_manager import InputManager
@@ -55,7 +55,7 @@ class Game:
         #tempo
         self.clock = pygame.time.Clock()
         self.t = 0
-        self.intervalo_turno = 2
+        self.intervalo_turno = 4
         self.turno = 0
         self.timeline = Timeline()
 

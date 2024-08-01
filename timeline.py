@@ -1,4 +1,4 @@
-from movements import Database
+from database import Database
 
 class Timeline:
     def __init__(self):
@@ -30,7 +30,6 @@ class Timeline:
         #se for movimento de base:
         print(estado_objetivo)
 
-        
         if self.movimento_classe.MOVEMENTS[estado_objetivo][0] == 0:
             self.add_base_to_timeline( estado_objetivo)
             # self.flag_adicionou_movimento = True
