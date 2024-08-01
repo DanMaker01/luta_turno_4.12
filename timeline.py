@@ -9,8 +9,8 @@ class Timeline:
         # self.flag_adicionou_movimento = False
 
     def add_base_to_timeline(self, estado_objetivo):
-        self.movimentos_a_fazer = []
-        estado_atual = self.estados_base[-1]
+        self.movimentos_a_fazer = [] #limpa a sequencia de movimentos a fazer
+        estado_atual = self.estados_base[-1] # pega o estado atual
         
         menor_sequencia_ate_objetivo = self.movimento_classe.get_menor_sequencia(estado_atual, estado_objetivo)
         
@@ -28,6 +28,9 @@ class Timeline:
     #implementar: talvez precise adicionar um terceiro caso, se não for base nem guarda??
     def add_movimento_to_timeline(self, estado_objetivo):
         #se for movimento de base:
+        print(estado_objetivo)
+
+        
         if self.movimento_classe.MOVEMENTS[estado_objetivo][0] == 0:
             self.add_base_to_timeline( estado_objetivo)
             # self.flag_adicionou_movimento = True

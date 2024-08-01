@@ -14,9 +14,10 @@ class Player:
         #editar: desenhar base; desenhar guarda na posição em relação à base
         
         screen.blit(self.sprites_base[self.estado[0]], self.pos)
+
+
+
         altura_sprite = self.sprites_base[self.estado[0]].get_height()
-
-
         # implementar: a posição varia de acordo com a base.
         screen.blit(self.sprites_guarda[self.estado[1]], self.pos+np.array([0, -altura_sprite]))
         
