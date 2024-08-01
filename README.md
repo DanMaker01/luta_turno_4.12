@@ -1,7 +1,7 @@
 --------------------------------------------------------------
 - Luta Turno
-- https://github.com/danmaker01/luta_turno
-- danmaker01
+- https://github.com/DanMaker01/luta_turno
+- DanMaker01
 - 2024
 --------------------------------------------------------------
 - Jogo de luta em turno (ABS)
