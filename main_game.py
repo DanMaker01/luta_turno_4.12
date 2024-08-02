@@ -45,7 +45,7 @@ class Game:
         #tempo
         self.clock = pygame.time.Clock()
         self.t = 0
-        self.intervalo_turno = 4
+        self.intervalo_turno = 10
         self.turno = 0
         self.timeline = Timeline()
 
