@@ -29,11 +29,15 @@ class Timeline:
     def add_movimento_to_timeline(self, estado_objetivo):
         #se for movimento de base:
         print(estado_objetivo)
+        if(estado_objetivo == "mover_avancar" or estado_objetivo == "mover_recuar"):
+            print("movimento!")
 
-        if self.movimento_classe.MOVEMENTS[estado_objetivo][0] == 0:
+        elif self.movimento_classe.MOVEMENTS[estado_objetivo][0] == 0:
+            print("base!")
             self.add_base_to_timeline( estado_objetivo)
             # self.flag_adicionou_movimento = True
         else:#senão é movimento de guarda
+            print("guarda!")
             self.add_guarda_to_timeline(estado_objetivo)
             # self.flag_adicionou_movimento = True
         
