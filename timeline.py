@@ -26,20 +26,34 @@ class Timeline:
         #IMPLEMENTAR @@@
 
     #implementar: talvez precise adicionar um terceiro caso, se não for base nem guarda??
-    def add_movimento_to_timeline(self, estado_objetivo):
-        #se for movimento de base:
-        print(estado_objetivo)
-        if(estado_objetivo == "mover_avancar" or estado_objetivo == "mover_recuar"):
-            print("movimento!")
-
-        elif self.movimento_classe.MOVEMENTS[estado_objetivo][0] == 0:
+    def add_movimento_to_timeline(self, movimento):
+        
+        print("movimento", movimento)
+        # se a string começa com "ataque":
+        if movimento.startswith("ataque"):
+            print("ataque!")
+            # se tiver na base de chute sai chute
+            # se tiver com guarda ou defesa sai soco
+        elif movimento.startswith("base"):
             print("base!")
-            self.add_base_to_timeline( estado_objetivo)
-            # self.flag_adicionou_movimento = True
-        else:#senão é movimento de guarda
-            print("guarda!")
-            self.add_guarda_to_timeline(estado_objetivo)
-            # self.flag_adicionou_movimento = True
+        elif movimento.startswith("mover"):
+            print("mover!")
+
+
+
+        # if(estado_objetivo == "mover_avancar" or estado_objetivo == "mover_recuar"):
+        #     print("movimento!")
+        #     if( estado_objetivo == "mover_avancar"):
+
+
+        # elif self.movimento_classe.MOVEMENTS[estado_objetivo][0] == 0:
+        #     print("base!")
+        #     self.add_base_to_timeline( estado_objetivo)
+        #     # self.flag_adicionou_movimento = True
+        # else:#senão é movimento de guarda
+        #     print("guarda!")
+        #     self.add_guarda_to_timeline(estado_objetivo)
+        #     # self.flag_adicionou_movimento = True
         
     def avancar_movimentos(self):
         # ???? explicar melhor

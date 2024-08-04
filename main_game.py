@@ -1,6 +1,4 @@
 
-
-
 import pygame
 import sys
 from player import Player
@@ -45,7 +43,7 @@ class Game:
         #tempo
         self.clock = pygame.time.Clock()
         self.t = 0
-        self.intervalo_turno = 10
+        self.intervalo_turno = 20
         self.turno = 0
         self.timeline = Timeline()
 
@@ -94,10 +92,10 @@ class Game:
     def draw(self):
         screen.blit(self.background_image, (0, 0))
         self.player.draw(screen)
-        self.draw_last_elements()
+        self.draw_hud()
         pygame.display.flip()
 
-    def draw_last_elements(self):
+    def draw_hud(self):
         last_elements = self.input_manager.buffer[-3:]
         for i, element in enumerate(last_elements):
             text_surface = self.font.render(str(element), True, (255, 255, 255))
@@ -111,11 +109,15 @@ class Game:
         movimentos_text = self.font.render(f"Timeline_base: {self.timeline.estados_base}", True, (255, 255, 255))
         screen.blit(movimentos_text, (5, 50))
 
-        #display timeline.movimentos_a_fazer
+        # Display timeline.estados_guarda
+        guarda_text = self.font.render(f"Timeline_guarda: {self.timeline.estados_guarda}", True, (255, 255, 255))
+        screen.blit(guarda_text, (5, 70))
+
+        # Display timeline.movimentos_a_fazer
         movimentos_a_fazer_text = self.font.render(f"Movimentos a fazer: {self.timeline.movimentos_a_fazer}", True, (255, 255, 255))
         screen.blit(movimentos_a_fazer_text, (5, 100))
 
-        #mostrar player.base_atual
+        # Display player.base_atual
         base_text = self.font.render(f"Estado atual: {self.player.estado}", True, (255, 255, 255))
         screen.blit(base_text, (5, 150))
 

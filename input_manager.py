@@ -1,4 +1,6 @@
 import pygame
+from database import Database
+
 class InputManager:
     def __init__(self):
         self.buffer = []
