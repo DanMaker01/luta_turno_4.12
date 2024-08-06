@@ -17,4 +17,4 @@ Z, seta: mudar base
 A, seta: mudar guarda
 
 OBS:
-alfa
+alfa 4.0

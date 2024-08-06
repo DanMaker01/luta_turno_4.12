@@ -3,9 +3,23 @@
 
 
 class Database:
-    ESTADOS_BASE = ["base_parado","base_agachado", "base_zenkutsu",  "base_cavaleiro","base_kokutsu", "base_chute","chute_frente","chute_lateral"]
+    ESTADOS_BASE = ["base_parado",
+                    "base_agachado", 
+                    "base_zenkutsu",  
+                    "base_cavaleiro",
+                    "base_kokutsu", 
+                    "base_chute",
+                    "chute_frente",
+                    "chute_lateral"]
+    
     BASE_CENTRO_COLUNA = [127,127,127,127,64,127,85,64]
-    ESTADOS_GUARDA = ["guarda_parado", "guarda_guarda", "soco_frente", "soco_tras","def_baixo", "def_alto"]
+    
+    ESTADOS_GUARDA = ["guarda_parado", 
+                      "guarda_guarda", 
+                      "soco_frente", 
+                      "soco_tras",
+                      "def_baixo", 
+                      "def_alto"]
 
     
     WIDTH, HEIGHT = 1240, 600
