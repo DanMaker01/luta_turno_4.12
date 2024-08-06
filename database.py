@@ -65,12 +65,14 @@ class Database:
         indice_estado_final = self.ESTADOS_BASE.index(estado_final)
         return self.MATRIZ_TRANSICAO_BASE[indice_estado_inicial][indice_estado_final]
     
+    #essa função pode ser melhorada, usando uma busca no grafo
+   
     def get_menor_sequencia(self, estado_inicial, estado_final): #editar: fazer recursivamente
         if(estado_inicial == estado_final):
             return [estado_inicial]
         sequencia = []
         distancia_inicial_final = self.verifica_distancia(estado_inicial, estado_final)
-        print("distancia_inicial_final = ",distancia_inicial_final)
+        # print("distancia_inicial_final = ",distancia_inicial_final)
         indice_estado_inicial = self.ESTADOS_BASE.index(estado_inicial)
         indice_estado_final = self.ESTADOS_BASE.index(estado_final)
 
@@ -102,6 +104,44 @@ class Database:
 
             return sequencia
 
-                
 
-            
+    def get_menor_sequencia_guarda(self, estado_inicial, estado_final): #editar: fazer recursivamente
+            if(estado_inicial == estado_final):
+                return [estado_inicial]
+            sequencia = []
+            distancia_inicial_final = self.verifica_distancia(estado_inicial, estado_final)
+            # print("distancia_inicial_final = ",distancia_inicial_final)
+            indice_estado_inicial = self.ESTADOS_GUARDA.index(estado_inicial)
+            indice_estado_final = self.ESTADOS_GUARDA.index(estado_final)
+
+            if (distancia_inicial_final > 0): #dist > 0, transição direta.
+                sequencia = self.add_estado_n_vezes(sequencia, estado_inicial, distancia_inicial_final)
+                sequencia.append(estado_final)
+                return sequencia
+            else: #dist = 0, transição indireta
+                menor_distancia_total = 999
+                sequencia_b = []
+                parcial_utilizado = ""
+                # para cada valor não nulo na linha do estado_inicial
+                for i in range(len(self.MATRIZ_TRANSICAO_BASE[indice_estado_inicial])):
+                    distancia_inicial_parcial = self.verifica_distancia(estado_inicial, self.ESTADOS_GUARDA[i])
+                    if (distancia_inicial_parcial > 0): # se dist não nula, verifica a dist parcial->final
+                        distancia_parcial_final = self.verifica_distancia(self.ESTADOS_GUARDA[i], estado_final)
+                        distancia_total_candidata = distancia_inicial_parcial+distancia_parcial_final
+                        if(distancia_total_candidata < menor_distancia_total):
+                            menor_distancia_total = distancia_total_candidata
+                            parcial_utilizado = self.ESTADOS_GUARDA[i]
+                            sequencia_b = self.get_menor_sequencia(self.ESTADOS_GUARDA[i], estado_final)
+                            # print("sequencia_b", sequencia_b)
+                        
+                    else:
+                        pass
+                    pass
+                sequencia = self.add_estado_n_vezes(sequencia, estado_inicial, self.verifica_distancia(estado_inicial, parcial_utilizado))
+                sequencia = sequencia + sequencia_b
+
+                return sequencia
+
+                    
+
+                
