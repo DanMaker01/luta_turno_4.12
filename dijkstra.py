@@ -17,6 +17,7 @@ def dijkstra_path(graph, start, end):
             continue
         
         for v, weight in enumerate(graph[u]):
+            
             if weight > 0:  # Verifica se há uma aresta
                 distance = current_distance + weight
                 if distance < distances[v]:

@@ -56,7 +56,7 @@ class Game:
 
     def draw(self):
         self.screen.fill((0, 0, 0))  # Preenche a tela com a cor preta
-        movimentos_text = ', '.join(self.timeline.pilha_movimentos_a_fazer)
+        movimentos_text = self.timeline.sequencia_base
         label = self.font.render(f"Movimentos: {movimentos_text}", True, (255, 255, 255))
         self.screen.blit(label, (20, 20))
         pygame.display.flip()

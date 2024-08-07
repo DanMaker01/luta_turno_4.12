@@ -37,36 +37,37 @@ class Timeline:
     def gerar_sequencia_base(self, base_final):
         indice_base_inicial = self.database.ESTADOS_BASE.index(self.linha_base[-1])
         indice_base_final = self.database.ESTADOS_BASE.index(base_final)
-        menor_sequencia = dijkstra.dijkstra_path(self.database.ESTADOS_BASE,indice_base_inicial,indice_base_final )
+        menor_sequencia = dijkstra.dijkstra_path(self.database.MATRIZ_TRANSICAO_BASE,indice_base_inicial,indice_base_final )
         return menor_sequencia
     
     def gerar_sequencia_guarda(self,base_final):
         indice_base_inicial = self.database.ESTADOS_GUARDA.index(self.linha_guarda[-1])
         indice_base_final = self.database.ESTADOS_GUARDA.index(base_final)
-        menor_sequencia = dijkstra.dijkstra_path(self.database.ESTADOS_GUARDA,indice_base_inicial,indice_base_final )
+        menor_sequencia = dijkstra.dijkstra_path(self.database.MATRIZ_TRANSICAO_GUARDA,indice_base_inicial,indice_base_final )
         return menor_sequencia
 
-    def executar_movimento(self):
+    def gerar_sequencia_de_movimento(self):
         movimento_a_executar = self.pilha_pop()
         if movimento_a_executar:
             string_movimento = self.database.check_movements(movimento_a_executar)
             print("string_movimento:",string_movimento)
             tipo = self.selecionar_tipo_movimento(string_movimento)
-            if(tipo == "base"):
-                print("é base!")
+            if tipo == "ataque":
+                #verifica se está na base de chute, se tiver sai chute, senão sai soco.
+                pass
+            elif(tipo == "base"):
                 menor_sequencia = self.gerar_sequencia_base(string_movimento)
+                print("base:",menor_sequencia)
+                self.sequencia_base = menor_sequencia[1]
                 pass
             elif (tipo == "guarda"):
-                print("é guarda")
                 menor_sequencia = self.gerar_sequencia_guarda(string_movimento)
-                pass
-            elif tipo == "ataque":
-                #verifica se está na base de chute, se tiver sai chute.
+                print("guarda:",menor_sequencia)
                 pass
             elif tipo == "mover":
                 print("é movimento")
         else:
-            pass
+            pass # não ha movimentos no buffer
 
     def selecionar_tipo_movimento(self,string_movimento):
         
@@ -82,4 +83,4 @@ class Timeline:
 
 
     def update(self):
-        self.executar_movimento()
+        self.gerar_sequencia_de_movimento()

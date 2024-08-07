@@ -16,8 +16,8 @@ class Database:
                       "guarda_guarda", 
                       "soco_frente", 
                       "soco_tras",
-                      "def_baixo", 
-                      "def_alto"]
+                      "guarda_defesa_baixa", 
+                      "guarda_defesa_alta"]
 
 
     MATRIZ_TRANSICAO_BASE = [ #8x8 (numeros de estados base)
@@ -31,14 +31,14 @@ class Database:
         [0,0,0,0,0,1,0,0]
     ]
     MATRIZ_TRANSICAO_GUARDA = [ #9x9
-        [0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0]
+        [0,1,0,0,0,0,0,0],
+        [0,0,1,0,0,0,0,0],
+        [0,0,0,1,0,0,0,0],
+        [0,0,0,0,1,0,0,0],
+        [0,0,0,0,0,1,0,0],
+        [0,0,0,0,0,0,1,0],
+        [0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0]
     ]
     
     MOVEMENTS_COMANDS = { #implementar: acertar o formato padrão
