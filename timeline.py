@@ -1,95 +1,85 @@
-from database import Database
+import database
+import input
+import dijkstra
 
 class Timeline:
+
     def __init__(self):
-        self.estados_base = ["base_parado"] #inicialmente o player está parado
-        self.estados_guarda = ["guarda_parado"] # inicialmente o player está parado
-        self.movimentos_a_fazer = []
-        self.database = Database()
-        # self.flag_adicionou_movimento = False
+        self.database = database.Database()
+        self.linha_tempo = [0]
+        self.linha_posicao = [10]
+        self.linha_guarda = ["guarda_parada"]
+        self.linha_base = ["base_parada"]
 
-    def add_base_to_timeline(self, estado_objetivo):
-        self.movimentos_a_fazer = [] #limpa a sequencia de movimentos a fazer
-        estado_atual = self.estados_base[-1] # pega o estado atual
-        
-        menor_sequencia_ate_objetivo = self.database.get_menor_sequencia(estado_atual, estado_objetivo)
-        
-        #verifica se você já está na posição inicial do movimento
-        if estado_atual == menor_sequencia_ate_objetivo[0]:
-            # retorna a menor_sequencia_ate_objetivo sem o primeiro item
-            self.movimentos_a_fazer= menor_sequencia_ate_objetivo[1:]
+        self.sequencia_guarda = []
+        self.sequencia_base = []
+        self.sequencia_movimento = []
+
+        self.pilha_movimentos_a_fazer = []
+
+    def pilha_add(self, movimento):
+        self.pilha_movimentos_a_fazer.append(movimento)
+    def pilha_pop(self):
+        if len(self.pilha_movimentos_a_fazer) > 0:
+            return self.pilha_movimentos_a_fazer.pop()
         else:
-            self.movimentos_a_fazer = menor_sequencia_ate_objetivo
+            return None
 
-    def add_guarda_to_timeline(self, estado_objetivo):
-        self.movimentos_a_fazer = []
-        #IMPLEMENTAR @@@
-        estado_atual = self.estados_guarda[-1]
-        menor_sequencia_ate_objetivo = self.database.get_menor_sequencia_guarda(estado_atual, estado_objetivo)
-        # menor_sequencia_ate_objetivo = self.database.get_menor_sequencia(estado_atual, estado_objetivo)
-        # self.movimentos_a_fazer = menor_sequencia_ate_objetivo
+    def criar_proxima_cena(self):
+        cena = []
+        #na verdade tem que add o primeiro item de cada sequencia
+        # cena.append(self.linha_tempo[-1])
+        # cena.append(self.linha_posicao[-1])
+        # cena.append(self.linha_guarda[-1])
+        # cena.append(self.linha_base[-1])
+        return cena
 
+    def gerar_sequencia_base(self, base_final):
+        indice_base_inicial = self.database.ESTADOS_BASE.index(self.linha_base[-1])
+        indice_base_final = self.database.ESTADOS_BASE.index(base_final)
+        menor_sequencia = dijkstra.dijkstra_path(self.database.ESTADOS_BASE,indice_base_inicial,indice_base_final )
+        return menor_sequencia
+    
+    def gerar_sequencia_guarda(self,base_final):
+        indice_base_inicial = self.database.ESTADOS_GUARDA.index(self.linha_guarda[-1])
+        indice_base_final = self.database.ESTADOS_GUARDA.index(base_final)
+        menor_sequencia = dijkstra.dijkstra_path(self.database.ESTADOS_GUARDA,indice_base_inicial,indice_base_final )
+        return menor_sequencia
 
-
-
-    #implementar: talvez precise adicionar um terceiro caso, se não for base nem guarda??
-    def add_movimento_to_timeline(self, movimento):
-        ultima_base = self.estados_base[-1]
-        # ultima_guarda = self.estados_guarda[-1]
-
-        print("movimento:", movimento)
-        # se a string começa com "ataque":
-        if movimento.startswith("ataque"):
-            print("ataque:")
-            # se tiver na base de chute sai chute
-            # se tiver com guarda ou defesa sai soco
-            if ultima_base == "base_chute":
-                if movimento == "ataque_leve":
-                    # print("chute leve!")
-                    self.add_guarda_to_timeline("chute_frente")
-                else:
-                    # print("chute pesado!")
-                    self.add_guarda_to_timeline("chute_tras")
-            else:
-                print("soco!")
-                if movimento == "ataque_leve":
-                    # print("soco leve!")
-                    self.add_guarda_to_timeline("soco_frente")
-                else:
-                    # print("soco pesado!")
-                    self.add_guarda_to_timeline("soco_tras")
-        elif movimento.startswith("base"):
-            print("base!")
-            self.add_base_to_timeline(movimento)
-        elif movimento.startswith("mover"):
-            print("mover!")
-        print("")
-
-
-        # if(estado_objetivo == "mover_avancar" or estado_objetivo == "mover_recuar"):
-        #     print("movimento!")
-        #     if( estado_objetivo == "mover_avancar"):
-
-
-        # elif self.database.MOVEMENTS[estado_objetivo][0] == 0:
-        #     print("base!")
-        #     self.add_base_to_timeline( estado_objetivo)
-        #     # self.flag_adicionou_movimento = True
-        # else:#senão é movimento de guarda
-        #     print("guarda!")
-        #     self.add_guarda_to_timeline(estado_objetivo)
-        #     # self.flag_adicionou_movimento = True
-        
-    def avancar_movimentos(self):
-        # ???? explicar melhor
-        pass
-
-
-    def executar_movimentos(self): # transfere movimento a fazer para timeline.estados_base 
-        if self.movimentos_a_fazer:
-            proximo_estado = self.movimentos_a_fazer.pop(0)
-            #implementar: mudar sprite do player
-            self.estados_base.append(proximo_estado)
+    def executar_movimento(self):
+        movimento_a_executar = self.pilha_pop()
+        if movimento_a_executar:
+            string_movimento = self.database.check_movements(movimento_a_executar)
+            print("string_movimento:",string_movimento)
+            tipo = self.selecionar_tipo_movimento(string_movimento)
+            if(tipo == "base"):
+                print("é base!")
+                menor_sequencia = self.gerar_sequencia_base(string_movimento)
+                pass
+            elif (tipo == "guarda"):
+                print("é guarda")
+                menor_sequencia = self.gerar_sequencia_guarda(string_movimento)
+                pass
+            elif tipo == "ataque":
+                #verifica se está na base de chute, se tiver sai chute.
+                pass
+            elif tipo == "mover":
+                print("é movimento")
         else:
-            # se não houver movimentos a fazer, adiciona-se repetidamente o ultimo estado
-            self.estados_base.append(self.estados_base[-1])
+            pass
+
+    def selecionar_tipo_movimento(self,string_movimento):
+        
+        if string_movimento.startswith("base"):
+            return "base"
+        if string_movimento.startswith("guarda"):
+            return "guarda"
+        if string_movimento.startswith("ataque"):
+            return "ataque"
+        if string_movimento.startswith("mover"):
+            return "mover"
+
+
+
+    def update(self):
+        self.executar_movimento()
