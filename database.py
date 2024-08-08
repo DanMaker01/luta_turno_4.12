@@ -42,27 +42,28 @@ class Database:
     ]
     
     MOVEMENTS_COMANDS = { #implementar: acertar o formato padrão
-        "base_parada" : ['z','z'],
-        "base_zenkutsu" : ['z','right'],
-        "base_kokutsu" : ['z','left'],
-        "base_chute" : ['z','up'],
-        "base_cavaleiro" : ['z','down'],
+        "base_parada" :     ['z','z'],
+        "base_zenkutsu" :   ['z','right'],
+        "base_kokutsu" :    ['z','left'],
+        "base_chute" :      ['z','up'],
+        "base_cavaleiro" :  ['z','down'],
 
-        "guarda_parada" : ['a','a'],
-        "ataque_leve" : ['a','right'],
-        "ataque_pesado" : ['a','left'],
-        "guarda_defesa_alta" : ['a','up'],
+        "guarda_parada" :       ['a','a'],
+        "guarda_defesa_alta" :  ['a','up'],
         "guarda_defesa_baixa" : ['a','down'],
+        
+        "ataque_leve" :     ['a','right'],
+        "ataque_pesado" :   ['a','left'],
 
-        "mover_esquerda" : ['left'],
-        "mover_direita" : ['right'],
-        "mover_strafe_cima" : ['up'],
-        "mover_strafe_baixo" : ['down'],
+        "mover_esquerda" :      ['left'],
+        "mover_direita" :       ['right'],
+        "mover_strafe_cima" :   ['up'],
+        "mover_strafe_baixo" :  ['down'],
 
-        "mover_direita2" : ['right','right'],
-        "mover_esquerda2": ['left','left'],
-        "mover_esquerda_direita" : ['left','right'],
-        "mover_direita_esquerda" : ['right','left'],
+        "mover_direita2" :          ['right','right'],
+        "mover_esquerda2":          ['left','left'],
+        "mover_esquerda_direita" :  ['left','right'],
+        "mover_direita_esquerda" :  ['right','left'],
     }
 
     def check_movements(self, sequence):

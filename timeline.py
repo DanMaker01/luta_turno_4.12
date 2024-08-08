@@ -25,7 +25,7 @@ class Timeline:
         else:
             return None
 
-    def criar_proxima_cena(self):
+    # def criar_proxima_cena(self):
         cena = []
         #na verdade tem que add o primeiro item de cada sequencia
         # cena.append(self.linha_tempo[-1])
@@ -46,23 +46,45 @@ class Timeline:
         menor_sequencia = dijkstra.dijkstra_path(self.database.MATRIZ_TRANSICAO_GUARDA,indice_base_inicial,indice_base_final )
         return menor_sequencia
 
+    def definir_sequencia_base(self, string_movimento):
+        menor_sequencia = self.gerar_sequencia_base(string_movimento)
+        self.sequencia_base =  menor_sequencia[1]
+    
+    def definir_sequencia_guarda(self, string_movimento):
+        menor_sequencia = self.gerar_sequencia_guarda(string_movimento)
+        self.sequencia_guarda = menor_sequencia[1]
+
+    def definir_sequencia_ataque(self, string_movimento):
+        base_atual = self.linha_base[-1]
+        if(base_atual == "base_chute"): #então gerar uma sequencia de chute
+            if string_movimento == "ataque_leve":
+                string_movimento = "chute_frente"
+            else: #então é ataque forte
+                string_movimento = "chute_lateral"
+            self.definir_sequencia_base(string_movimento) #base
+        else: #então é soco
+            if string_movimento == "ataque_leve":
+                string_movimento = "soco_frente"
+            else: #então é ataque forte
+                string_movimento = "soco_tras"
+            self.definir_sequencia_guarda(string_movimento) #guarda
+        
+        
+
     def gerar_sequencia_de_movimento(self):
         movimento_a_executar = self.pilha_pop()
         if movimento_a_executar:
             string_movimento = self.database.check_movements(movimento_a_executar)
             print("string_movimento:",string_movimento)
             tipo = self.selecionar_tipo_movimento(string_movimento)
-            if tipo == "ataque":
-                #verifica se está na base de chute, se tiver sai chute, senão sai soco.
+            if tipo == "ataque": #chute ou soco
+                self.definir_sequencia_ataque(string_movimento)
                 pass
             elif(tipo == "base"):
-                menor_sequencia = self.gerar_sequencia_base(string_movimento)
-                print("base:",menor_sequencia)
-                self.sequencia_base = menor_sequencia[1]
+                self.definir_sequencia_base(string_movimento)
                 pass
-            elif (tipo == "guarda"):
-                menor_sequencia = self.gerar_sequencia_guarda(string_movimento)
-                print("guarda:",menor_sequencia)
+            elif (tipo == "guarda"): #defesa
+                self.definir_sequencia_guarda(string_movimento)
                 pass
             elif tipo == "mover":
                 print("é movimento")
