@@ -43,7 +43,7 @@ class Game:
         self.running = True
         self.clock = pygame.time.Clock()
         self.database = database.Database()
-        # self.t = 0
+        self.t = 0
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -54,45 +54,52 @@ class Game:
 
     def update(self):
         self.timeline.update()
-        if pygame.time.get_ticks() % 100 >= 0:
+        self.t+=1
+        if self.t % 100 == 0:
             self.timeline.addTimeline()
 
     def draw(self):
         self.screen.fill((0, 0, 0))  # Preenche a tela com a cor preta
-        
-        # Render sequencia_movimento
-        movimentos_movimento_text = self.timeline.sequencia_movimento
-        label_movimento = self.font.render(f"Sequencia Movimento: {movimentos_movimento_text}", True, (255, 255, 255))
-        self.screen.blit(label_movimento, (20, 20))
-        # self.screen.blit(label_movimento, (20, 80))
-        
+        margem_x = 10
+        margem_y = 10
+        espacamento_linha = 20
+        # Texto estático
+        texto_estatico = "A: Guarda, Z: Base, Setas: Movimento"
+        label_estatico = self.font.render(texto_estatico, True, (255, 255, 255))
+        self.screen.blit(label_estatico, (margem_x, margem_y))  # Posição no topo da tela
+
         # Render self.linha_guarda[-1]
         guarda_atual_text = self.timeline.linha_guarda[-1]
         label_linha_guarda = self.font.render(f"Guarda Atual: {guarda_atual_text,self.database.ESTADOS_GUARDA.index(guarda_atual_text)}", True, (255, 255, 255))
-        self.screen.blit(label_linha_guarda, (20, 40))
-        # self.screen.blit(label_linha_guarda, (20, 110))
-        
+        self.screen.blit(label_linha_guarda, (margem_x, margem_y+espacamento_linha))  # Posicione conforme necessário
+
         # Render self.linha_base[-1]
         base_atual_text = self.timeline.linha_base[-1]
         label_linha_base = self.font.render(f"Base Atual: {base_atual_text,self.database.ESTADOS_BASE.index(base_atual_text)}", True, (255, 255, 255))
-        self.screen.blit(label_linha_base, (20, 60))
-        # self.screen.blit(label_linha_base, (20, 140))
+        self.screen.blit(label_linha_base, (margem_x, margem_y+2*espacamento_linha))  # Posicione conforme necessário
         
-        
-        
-        
+        # Render sequencia_guarda em coluna
+        movimentos_guarda = self.timeline.sequencia_guarda
+        for i, movimento in enumerate(movimentos_guarda):
+            label_movimento = self.font.render(f"Guarda seq {i+1}: {movimento}", True, (255, 255, 255))
+            self.screen.blit(label_movimento, (margem_x, margem_y+100 + i * espacamento_linha))  # Desenha a 200 pixels à direita da coluna de base
 
-
-
+        # Render sequencia_base em coluna
+        movimentos_base = self.timeline.sequencia_base
+        for i, movimento in enumerate(movimentos_base):
+            label_movimento = self.font.render(f"Base seq {i+1}: {movimento}", True, (255, 255, 255))
+            self.screen.blit(label_movimento, (margem_x+200, margem_y+100 + i * espacamento_linha))  # 40 é o espaçamento vertical após o texto estático
 
 
         pygame.display.flip()
+
+
 
     def run(self):
         while self.running:
             self.handle_events() 
             comando, b = self.detector.check_sequences()
-            if comando:
+            if comando: # se a sequência for detectada
                 self.timeline.pilha_add(comando)
             self.update()
             self.draw()
