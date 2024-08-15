@@ -6,7 +6,7 @@ class Timeline:
     def __init__(self):
         self.database = database.Database()
         self.linha_tempo = [0] 
-        self.linha_posicao = [10] #posicao inicial
+        self.linha_posicao = [1] #posicao inicial
         self.linha_guarda = ["guarda_parado"]
         self.linha_base = ["base_parado"]
 

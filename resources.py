@@ -12,11 +12,11 @@ class ResourceLoader:
         
         self.bases = []
         for base in self.database.ESTADOS_BASE:
-            self.bases.append([base,self.load_image(base+".png")])
+            self.bases.append([base,self.scale_image(self.load_image(base+".png"),0.25)])
         
         self.guardas= []
         for guarda in self.database.ESTADOS_GUARDA:
-            self.guardas.append([guarda,self.load_image(guarda+".png")])
+            self.guardas.append([guarda,self.scale_image(self.load_image(guarda+".png"),0.25)])
         
         # print("recursos carregados")
 
@@ -36,9 +36,9 @@ class ResourceLoader:
         new_size = (int(width * scale), int(height * scale))
         return pygame.transform.scale(image, new_size)
 
-    def get_bg(self):
+    def get_bg_img(self):
         return self.bg
-    def get_base(self, nome):
+    def get_base_img(self, nome):
         return self.bases[self.database.ESTADOS_BASE.index(nome)][1]
-    def get_guarda(self,nome):
+    def get_guarda_img(self,nome):
         return self.guardas[self.database.ESTADOS_GUARDA.index(nome)][1]
