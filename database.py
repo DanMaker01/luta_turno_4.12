@@ -29,7 +29,7 @@ class Database:
                       "guarda_defesa_baixo", 
                       "guarda_defesa_alto"]
 
-    MATRIZ_TRANSICAO_GUARDA = [ #6x6
+    MATRIZ_TRANSICAO_GUARDA = [ #6x6 #implementar
         [0,1,0,0,0,0],
         [0,0,1,0,0,0],
         [0,0,0,1,0,0],

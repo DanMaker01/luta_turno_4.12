@@ -22,7 +22,7 @@ class Timeline:
 
     def get_ultima_base(self):
         return self.linha_base[-1]
-    def get_ultimo_guarda(self):
+    def get_ultima_guarda(self):
         return self.linha_guarda[-1]
     def get_ultima_posicao(self):
         return self.linha_posicao[-1]

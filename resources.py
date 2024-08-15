@@ -18,7 +18,7 @@ class ResourceLoader:
         for guarda in self.database.ESTADOS_GUARDA:
             self.guardas.append([guarda,self.load_image(guarda+".png")])
         
-        print("recursos carregados")
+        # print("recursos carregados")
 
         pygame.mixer.init()
 
@@ -36,5 +36,9 @@ class ResourceLoader:
         new_size = (int(width * scale), int(height * scale))
         return pygame.transform.scale(image, new_size)
 
-    def get_image(self, nome):
-        return self.objs
+    def get_bg(self):
+        return self.bg
+    def get_base(self, nome):
+        return self.bases[self.database.ESTADOS_BASE.index(nome)][1]
+    def get_guarda(self,nome):
+        return self.guardas[self.database.ESTADOS_GUARDA.index(nome)][1]

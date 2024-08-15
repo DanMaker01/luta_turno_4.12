@@ -8,6 +8,8 @@ class Game:
     def __init__(self, width=640, height=480):
         pygame.init()
         pygame.display.set_caption("Jogo luta em turno")
+        self.WIDTH = width
+        self.HEIGHT = height
         self.screen = pygame.display.set_mode((width, height))
         self.font = pygame.font.SysFont(None, 20)
         self.predefined_sequences = [
@@ -46,6 +48,8 @@ class Game:
         self.database = database.Database()
         self.t = 0
         self.recursos = ResourceLoader()
+        
+        
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -62,9 +66,22 @@ class Game:
             self.timeline.addTimeline()
         
         
+    def desenhar_base(self,nome_base,x,y):
+        imagem = self.recursos.get_base(nome_base)
+        self.screen.blit(imagem, (x, y+imagem.get_height()))
+    def desenhar_guarda(self,nome_guarda,x,y):
+        base_atual = self.timeline.get_ultima_base()
+        
+        
+        # if base_atual == "base_chute":
+        #     y = y+
+        
+        imagem = self.recursos.get_guarda(nome_guarda)
+        
+        self.screen.blit(imagem, (x-1, y))
 
     def draw(self):
-        self.screen.fill((0, 0, 0))  # Preenche a tela com a cor preta
+        self.screen.fill((127, 127, 127))  # Preenche a tela com a cor preta
         margem_x = 10
         margem_y = 10
         espacamento_linha = 20
@@ -94,6 +111,16 @@ class Game:
         for i, movimento in enumerate(movimentos_base):
             label_movimento = self.font.render(f"Base seq {i+1}: {movimento}", True, (255, 255, 255))
             self.screen.blit(label_movimento, (margem_x+200, margem_y+100 + i * espacamento_linha))  # 40 é o espaçamento vertical após o texto estático
+
+
+        guarda_atual = self.timeline.get_ultima_guarda()
+        base_atual = self.timeline.get_ultima_base()
+
+        #render base e guarda
+        pos_x = 0
+        pos_y = 0
+        self.desenhar_guarda(guarda_atual, pos_x, pos_y)
+        self.desenhar_base(base_atual, pos_x,pos_y)
 
 
         pygame.display.flip()
