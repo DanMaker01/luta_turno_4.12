@@ -23,4 +23,4 @@ Z + "seta direita" --> mudar base para zenkutsu
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 OBS:
-alfa 4.6
+alfa 4.7
