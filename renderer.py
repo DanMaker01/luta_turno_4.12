@@ -68,20 +68,29 @@ class Renderer:
         posicao_atual = self.timeline.get_ultima_posicao()
 
         largura_img = self.recursos.get_guarda_img(guarda_atual).get_width()
+        altura_img = self.recursos.get_guarda_img(guarda_atual).get_height()
         
         pos_x = posicao_atual*largura_img
-        pos_y = self.alt-largura_img
+        pos_y = self.alt-altura_img
         
+        # posicao da guarda em relacao à base
         var_x = 0
-        var_y = -largura_img
-        if base_atual != "base_parado" and base_atual != "base_chute":
-            var_y = -(3/4)*largura_img
-        if base_atual == "base_kokutsu":
-            var_x = -largura_img*(17/64)
+        var_y = -altura_img + (1/8)*altura_img
         
+        # posicao da guarda em relacao à base em casos específicos
+        if base_atual != "base_parado" and base_atual != "base_chute": #ficam mais altas
+            var_y = -(3/4)*altura_img
+        if base_atual == "base_kokutsu": # há deslocamento pra esquerda
+            var_x = -largura_img*(17/64)
+        if guarda_atual == "guarda_defesa_alto" or guarda_atual == "guarda_defesa_baixo":
+            var_x += largura_img*(1/64)
+        if guarda_atual == "soco_tras":
+            var_x += largura_img*(1/64)
+            var_y += altura_img*(1/32)
+        
+
         pos_x_guarda = pos_x + var_x
         pos_y_guarda = pos_y + var_y
-
         # print(pos_x, pos_y,var_x,var_y)
         # print(var_x, var_y)
         self.desenhar_guarda(guarda_atual, pos_x_guarda, pos_y_guarda)

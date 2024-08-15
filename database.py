@@ -45,7 +45,7 @@ class Database:
         "base_chute" :      ['z','up'],
         "base_cavaleiro" :  ['z','down'],
 
-        "guarda_parada" :       ['a','a'],
+        "guarda_parado" :       ['a','a'],
         "guarda_defesa_alto" :  ['a','up'],
         "guarda_defesa_baixo" : ['a','down'],
         
