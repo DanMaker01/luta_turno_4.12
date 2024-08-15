@@ -6,5 +6,5 @@ class GameLogic:
     def update(self):
         self.timeline.update()
         self.t += 1
-        if self.t % 50 == 0:  # tempo de um turno in_game
+        if self.t % 10 == 0:  # tempo de um turno in_game
             self.timeline.addTimeline()
