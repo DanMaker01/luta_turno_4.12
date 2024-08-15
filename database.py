@@ -1,7 +1,7 @@
 class Database:
     BASE_CENTRO_COLUNA = [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]
 
-    ESTADOS_BASE = ["base_parada",
+    ESTADOS_BASE = ["base_parado",
                     "base_agachado", 
                     "base_zenkutsu",  
                     "base_cavaleiro",
@@ -22,12 +22,12 @@ class Database:
     ]
 
     
-    ESTADOS_GUARDA = ["guarda_parada", 
+    ESTADOS_GUARDA = ["guarda_parado", 
                       "guarda_guarda", 
                       "soco_frente", 
                       "soco_tras",
-                      "guarda_defesa_baixa", 
-                      "guarda_defesa_alta"]
+                      "guarda_defesa_baixo", 
+                      "guarda_defesa_alto"]
 
     MATRIZ_TRANSICAO_GUARDA = [ #6x6
         [0,1,0,0,0,0],
@@ -39,15 +39,15 @@ class Database:
     ]
     
     MOVEMENTS_COMANDS = { #implementar: acertar o formato padrão
-        "base_parada" :     ['z','z'],
+        "base_parado" :     ['z','z'],
         "base_zenkutsu" :   ['z','right'],
         "base_kokutsu" :    ['z','left'],
         "base_chute" :      ['z','up'],
         "base_cavaleiro" :  ['z','down'],
 
         "guarda_parada" :       ['a','a'],
-        "guarda_defesa_alta" :  ['a','up'],
-        "guarda_defesa_baixa" : ['a','down'],
+        "guarda_defesa_alto" :  ['a','up'],
+        "guarda_defesa_baixo" : ['a','down'],
         
         "ataque_leve" :     ['a','right'],
         "ataque_pesado" :   ['a','left'],

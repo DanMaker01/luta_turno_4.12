@@ -7,8 +7,8 @@ class Timeline:
         self.database = database.Database()
         self.linha_tempo = [0] 
         self.linha_posicao = [10] #posicao inicial
-        self.linha_guarda = ["guarda_parada"]
-        self.linha_base = ["base_parada"]
+        self.linha_guarda = ["guarda_parado"]
+        self.linha_base = ["base_parado"]
 
         self.contagem_cena = 1
 
@@ -19,6 +19,13 @@ class Timeline:
         self.sequencia_posicao = []
 
         self.pilha_movimentos_a_fazer = []
+
+    def get_ultima_base(self):
+        return self.linha_base[-1]
+    def get_ultimo_guarda(self):
+        return self.linha_guarda[-1]
+    def get_ultima_posicao(self):
+        return self.linha_posicao[-1]
 
     def pilha_add(self, movimento):
         self.pilha_movimentos_a_fazer.append(movimento)

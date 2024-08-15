@@ -2,6 +2,7 @@ import pygame
 import database
 from input import KeySequenceDetector
 from timeline import Timeline
+from resources import ResourceLoader
 
 class Game:
     def __init__(self, width=640, height=480):
@@ -39,11 +40,12 @@ class Game:
             # Adicione mais sequências conforme necessário
         ]
         self.detector = KeySequenceDetector(self.predefined_sequences)
-        self.timeline = Timeline()
         self.running = True
+        self.timeline = Timeline()
         self.clock = pygame.time.Clock()
         self.database = database.Database()
         self.t = 0
+        self.recursos = ResourceLoader()
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -52,11 +54,14 @@ class Game:
             elif event.type == pygame.KEYDOWN:
                 self.detector.handle_keydown(event.key)
 
+    
     def update(self):
         self.timeline.update()
         self.t+=1
-        if self.t % 100 == 0:
+        if self.t % 100 == 0: #tempo de um turno in_game
             self.timeline.addTimeline()
+        
+        
 
     def draw(self):
         self.screen.fill((0, 0, 0))  # Preenche a tela com a cor preta
