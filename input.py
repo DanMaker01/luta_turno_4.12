@@ -8,7 +8,7 @@ import pygame
 # como deve ser: ao apertar uma tecla inicia-se uma contagem, adiciona-se a tecla no buffer e verifica se há uma sequencia válida. após o contador o buffer zera.
 
 class KeySequenceDetector:
-    def __init__(self, predefined_sequences, key_interval_max=0.166):
+    def __init__(self, predefined_sequences, key_interval_max=0.175):
         self.predefined_sequences = predefined_sequences
         self.keys_pressed = []
         self.key_times = []
