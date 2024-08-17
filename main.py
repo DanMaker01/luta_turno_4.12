@@ -58,7 +58,7 @@ class Game:
     def run(self):
         while self.event_handler.running:
             self.event_handler.handle_events()
-            comando, b = self.detector.check_sequences()
+            comando, tempo_entre_comandos = self.detector.check_sequences()
             if comando:  # se a sequência for detectada
                 self.timeline.pilha_add(comando)
             self.logic.update()
