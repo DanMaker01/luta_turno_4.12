@@ -63,17 +63,39 @@ class Timeline:
             cena.append(self.linha_base[-1])
             
         return cena
-    
+    def get_cena(self, indice):
+        tamanho_timeline = len(self.linha_tempo)
+        if(indice > tamanho_timeline):
+            return None
+        else:
+            cena = []
+            cena.append(self.linha_tempo[indice])
+            cena.append(self.linha_posicao[indice])
+            cena.append(self.linha_guarda[indice])
+            cena.append(self.linha_base[indice])
+            return cena
     def aplicar_cena_na_timeline(self, cena):
         self.linha_tempo.append(cena[0])
         self.linha_posicao.append(cena[1])
         self.linha_guarda.append(cena[2])
         self.linha_base.append(cena[3])
+    def verificar_efeitos_da_acao(self):
+        ultima_cena = self.get_cena(-1)
+        ultima_postura = [ultima_cena[2],ultima_cena[3]]
+
+        penultima_cena = self.get_cena(-2)
+        penultima_postura = [penultima_cena[2],penultima_cena[3]]
+
+        if ultima_postura != penultima_postura:
+            print("se moveu sim que eu vi!!")
+            pass
+
+    
     def addTimeline(self):
         cena = self.criar_proxima_cena()
-        print("cena",cena)
+        # print("cena",cena)
         self.aplicar_cena_na_timeline(cena)
-
+        self.verificar_efeitos_da_acao()
 
     def gerar_sequencia_base(self, base_final):
         indice_base_inicial = self.database.ESTADOS_BASE.index(self.linha_base[-1])

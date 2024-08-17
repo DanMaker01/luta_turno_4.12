@@ -52,7 +52,7 @@ class Game:
 
         self.event_handler = EventHandler(self.detector)
         self.logic = GameLogic(self.timeline)
-        self.renderer = Renderer(self.screen, self.font, self.recursos, self.timeline, self.database,width,height)
+        self.renderer = Renderer(self.screen, self.font, self.recursos, self.timeline, self.database,self.detector,width,height)
         self.clock = pygame.time.Clock()
 
     def run(self):

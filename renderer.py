@@ -3,7 +3,7 @@
 import pygame
 
 class Renderer:
-    def __init__(self, screen, font, recursos, timeline, database, larg, alt):
+    def __init__(self, screen, font, recursos, timeline, database,input, larg, alt):
         self.screen = screen
         self.font = font
         self.recursos = recursos
@@ -12,9 +12,12 @@ class Renderer:
         self.cor_neutra = (100,100,100)
         self.alt = alt
         self.lar = larg
+        self.input = input
 
     # def desenhar_obj(self, objeto, x, y):
     #     if 
+
+
 
     def desenhar_bg(self):
         imagem = self.recursos.get_bg_img()
@@ -39,7 +42,11 @@ class Renderer:
         base_atual_text = self.timeline.get_ultima_base()
         label_linha_base = self.font.render(f"Base Atual: {base_atual_text,self.database.ESTADOS_BASE.index(base_atual_text)}", True, (255, 255, 255))
         self.screen.blit(label_linha_base, (margem_x, margem_y + 2 * espacamento_linha))
-        
+
+        # renderizar buffer de teclas apertadas
+        label_buffer = self.font.render(f"Buffer: {self.input.get_keys_pressed()}", True, (255, 255, 255))
+        self.screen.blit(label_buffer, (margem_x, margem_y + 3 * espacamento_linha))
+
         # Renderizar sequencia_guarda em coluna
         movimentos_guarda = self.timeline.sequencia_guarda
         for i, movimento in enumerate(movimentos_guarda):
@@ -74,14 +81,14 @@ class Renderer:
         pos_y = self.alt-altura_img
         
         # posicao da guarda em relacao à base
-        var_x = -largura_img*(1/128)
+        var_x = -largura_img*(1/256)
         var_y = -altura_img + (1/8)*altura_img
         
         # posicao da guarda em relacao à base em casos específicos
         if base_atual != "base_parado" and base_atual != "base_chute": #ficam mais altas
             var_y = -(3/4)*altura_img
         if base_atual == "base_kokutsu": # há deslocamento pra esquerda
-            var_x = -largura_img*(17/64)
+            var_x = -largura_img*(67/256)
         if base_atual == "base_zenkutsu":
             var_x = largura_img*(0/64)
         if base_atual == "base_cavaleiro":
@@ -91,9 +98,9 @@ class Renderer:
         if base_atual == "chute_frente": # há deslocamento para cima
             var_x += -largura_img*(11/64)
         if base_atual == "chute_lateral":
-            var_x += -largura_img*(16/64)
+            var_x += -largura_img*(65/256 )#corrigir
         if base_atual == "base_agachado":
-            var_x += largura_img*(1/128)
+            var_x += largura_img*(1/256)
 
         if guarda_atual == "guarda_defesa_alto" or guarda_atual == "guarda_defesa_baixo":
             var_x += largura_img*(1/64)

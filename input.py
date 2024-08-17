@@ -2,12 +2,15 @@ import time
 import pygame
 
 class KeySequenceDetector:
-    def __init__(self, predefined_sequences, key_interval_max=0.150):
+    def __init__(self, predefined_sequences, key_interval_max=0.333):
         self.predefined_sequences = predefined_sequences
         self.keys_pressed = []
         self.key_times = []
         self.key_interval_max = key_interval_max  # intervalo máximo de tempo em segundos
         self.last_key_time = None
+
+    def get_keys_pressed(self):
+        return self.keys_pressed
 
     def handle_keydown(self, key):
         current_time = time.time()
@@ -18,19 +21,20 @@ class KeySequenceDetector:
         self.last_key_time = current_time
 
     def check_sequences(self):
-        if not self.last_key_time:
-            return None, None
+        if not self.last_key_time: # Verifique se a lista de teclas pressionadas ainda é vazia
+            return None, None # Retorna None se nenhuma sequência for detectada
         
-        current_time = time.time()
-        if (current_time - self.last_key_time) >= self.key_interval_max:
-            # Verifique as sequências antes de resetar
-            buffer_length = len(self.keys_pressed)
-            for sequence in self.predefined_sequences:
-                if self.is_sequence(sequence, buffer_length):
-                    sequencia, intervalos = self.handle_sequence_detected(sequence)
-                    return sequencia, intervalos
+        current_time = time.time() # Obtenha o tempo atual
+        if (current_time - self.last_key_time) >= self.key_interval_max: # Verifique se o intervalo de tempo ultrapassou o limite
+            # Verifique as sequências antes de resetar 
+            buffer_length = len(self.keys_pressed) # Tamanho da lista de teclas pressionadas
+            for sequence in self.predefined_sequences: # Percorra as sequências predefinidas
+                if self.is_sequence(sequence, buffer_length): # Verifique se a sequência atual corresponde a uma sequência predefinida
+                    sequencia, intervalos = self.handle_sequence_detected(sequence) # Sequência detectada
+                    return sequencia, intervalos# Retorna a sequência e os intervalos de tempo
             # Reset se nenhuma sequência for detectada
-            self.reset()
+            self.reset()# Reseta a lista de teclas pressionadas
+            print("resetou após tempo sem apertar nada...")
             return None, None
         return None, None
         
@@ -45,12 +49,13 @@ class KeySequenceDetector:
                     return True
         return False
 
-    def handle_sequence_detected(self, sequence):
+    def handle_sequence_detected(self, sequence): #
         # print(f"Sequência detectada: {sequence}")
-        key_intervals = [self.key_times[i] - self.key_times[i-1] for i in range(1, len(self.key_times))]
-        intervalos = [round(interval, 3) for interval in key_intervals]
+        key_intervals = [self.key_times[i] - self.key_times[i-1] for i in range(1, len(self.key_times))] # Calcula os intervalos de tempo
+        intervalos = [round(interval, 3) for interval in key_intervals] # Arredonda os intervalos de tempo
         # print(f"Intervalos de tempo: {intervalos} segundos")
         self.reset()
+        print("reset pelo handle_sequence_detected")
         return sequence, intervalos
 
     def reset(self):
