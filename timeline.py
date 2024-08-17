@@ -87,7 +87,7 @@ class Timeline:
         penultima_postura = [penultima_cena[2],penultima_cena[3]]
 
         if ultima_postura != penultima_postura:
-            print("se moveu sim que eu vi!!")
+            # print("se moveu sim que eu vi!!")
             pass
 
     

@@ -2,7 +2,7 @@ import time
 import pygame
 
 class KeySequenceDetector:
-    def __init__(self, predefined_sequences, key_interval_max=0.333):
+    def __init__(self, predefined_sequences, key_interval_max=0.250):
         self.predefined_sequences = predefined_sequences
         self.keys_pressed = []
         self.key_times = []
@@ -34,7 +34,7 @@ class KeySequenceDetector:
                     return sequencia, intervalos# Retorna a sequência e os intervalos de tempo
             # Reset se nenhuma sequência for detectada
             self.reset()# Reseta a lista de teclas pressionadas
-            print("resetou após tempo sem apertar nada...")
+            # print("resetou após tempo sem apertar nada...")
             return None, None
         return None, None
         
