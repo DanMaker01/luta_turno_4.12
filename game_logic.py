@@ -8,3 +8,4 @@ class GameLogic:
         self.t += 1
         if self.t % 10 == 0:  # tempo de um turno in_game
             self.timeline.addTimeline()
+            

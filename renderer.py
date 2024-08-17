@@ -1,5 +1,4 @@
 
-
 import pygame
 
 class Renderer:
@@ -16,7 +15,6 @@ class Renderer:
 
     # def desenhar_obj(self, objeto, x, y):
     #     if 
-
 
 
     def desenhar_bg(self):
