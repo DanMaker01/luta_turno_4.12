@@ -12,11 +12,11 @@ class ResourceLoader:
         
         self.bases = []
         for base in self.database.ESTADOS_BASE:
-            self.bases.append([base,self.scale_image(self.load_image(base+".png"),1.0)])
+            self.bases.append([base,self.scale_image(self.load_image(base+".png"),0.5)])
         
         self.guardas= []
         for guarda in self.database.ESTADOS_GUARDA:
-            self.guardas.append([guarda,self.scale_image(self.load_image(guarda+".png"),1.0)])
+            self.guardas.append([guarda,self.scale_image(self.load_image(guarda+".png"),0.5)])
         
         # print("recursos carregados")
 
