@@ -87,13 +87,13 @@ class Timeline:
         penultima_postura = [penultima_cena[2],penultima_cena[3]]
 
         if ultima_postura != penultima_postura:
-            # print("se moveu sim que eu vi!!")
+            # print("se moveu!!")
             pass
 
     
     def addTimeline(self):
         cena = self.criar_proxima_cena()
-        # print("cena",cena)
+        
         self.aplicar_cena_na_timeline(cena)
         self.verificar_efeitos_da_acao()
 
@@ -197,16 +197,18 @@ class Timeline:
             pass # não ha movimentos no buffer
 
     def selecionar_tipo_movimento(self,string_movimento):
-        
-        if string_movimento.startswith("base"):
-            return "base"
-        if string_movimento.startswith("guarda"):
-            return "guarda"
-        if string_movimento.startswith("ataque"):
-            return "ataque"
-        if string_movimento.startswith("mover"):
-            return "mover" 
+        if string_movimento:
 
+            if string_movimento.startswith("base"):
+                return "base"
+            if string_movimento.startswith("guarda"):
+                return "guarda"
+            if string_movimento.startswith("ataque"):
+                return "ataque"
+            if string_movimento.startswith("mover"):
+                return "mover" 
+        else:
+            pass # 
     def update(self):
         self.selecionar_tipo_do_movimento_e_alocar_sequencia()
         # self.executar_movimentos()

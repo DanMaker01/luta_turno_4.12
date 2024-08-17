@@ -120,9 +120,6 @@ class Renderer:
 
     def draw(self):
         self.screen.fill(self.cor_neutra)  # Preenche a tela com a cor cinza
-        
-        # Renderizar img da base e guarda
-        self.desenhar_jogador()
-        
-        self.desenhar_hud()
+        self.desenhar_jogador() # Renderizar img da base e guarda
+        self.desenhar_hud() 
         pygame.display.flip()
