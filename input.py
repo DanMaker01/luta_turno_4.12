@@ -43,8 +43,7 @@ class KeySequenceDetector:
             # print("resetou após tempo sem apertar nada...")
             return None, None
         return None, None
-        
-
+    
     def is_sequence(self, sequence, buffer_length):
         sequence_length = len(sequence)
         if buffer_length >= sequence_length:
@@ -61,7 +60,7 @@ class KeySequenceDetector:
         intervalos = [round(interval, 3) for interval in key_intervals] # Arredonda os intervalos de tempo
         # print(f"Intervalos de tempo: {intervalos} segundos")
         self.reset()
-        print("reset pelo handle_sequence_detected")
+        
         return sequence, intervalos
 
     def reset(self):

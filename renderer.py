@@ -4,6 +4,7 @@
 
 import pygame
 
+
 class BackgroundRenderer:
     def __init__(self, screen, recursos):
         self.screen = screen
@@ -17,6 +18,7 @@ class HUDRenderer:
     def __init__(self, screen, font, timeline, database, input):
         self.screen = screen
         self.font = font
+        self.font_color = (20, 20, 20)
         self.timeline = timeline
         self.database = database
         self.input = input
@@ -38,14 +40,14 @@ class HUDRenderer:
 
     def _desenhar_texto_estatico(self):
         texto_estatico = "A: Guarda, Z: Base, Setas: Movimento"
-        label_estatico = self.font.render(texto_estatico, True, (255, 255, 255))
+        label_estatico = self.font.render(texto_estatico, True, self.font_color)
         self.screen.blit(label_estatico, (self.margem_x, self.margem_y))
 
     def _desenhar_guarda_atual(self):
         guarda_atual_text = self.timeline.get_ultima_guarda()
         label_linha_guarda = self.font.render(
             f"Guarda Atual: {guarda_atual_text, self.database.ESTADOS_GUARDA.index(guarda_atual_text)}",
-            True, (255, 255, 255)
+            True, self.font_color
         )
         self.screen.blit(label_linha_guarda, (self.margem_x, self.margem_y + self.espacamento_linha))
 
@@ -53,24 +55,24 @@ class HUDRenderer:
         base_atual_text = self.timeline.get_ultima_base()
         label_linha_base = self.font.render(
             f"Base Atual: {base_atual_text, self.database.ESTADOS_BASE.index(base_atual_text)}",
-            True, (255, 255, 255)
+            True, self.font_color
         )
         self.screen.blit(label_linha_base, (self.margem_x, self.margem_y + 2 * self.espacamento_linha))
 
     def _desenhar_buffer_teclas(self):
-        label_buffer = self.font.render(f"Buffer: {self.input.get_keys_pressed()}", True, (255, 255, 255))
+        label_buffer = self.font.render(f"Buffer: {self.input.get_keys_pressed()}", True, self.font_color)
         self.screen.blit(label_buffer, (self.margem_x, self.margem_y + 3 * self.espacamento_linha))
 
     def _desenhar_sequencias_guarda(self):
         movimentos_guarda = self.timeline.sequencia_guarda
         for i, movimento in enumerate(movimentos_guarda):
-            label_movimento = self.font.render(f"{i + 1}: {movimento}", True, (255, 255, 255))
+            label_movimento = self.font.render(f"{i + 1}: {movimento}", True, self.font_color)
             self.screen.blit(label_movimento, (self.margem_x, self.margem_y + 100 + i * self.espacamento_linha))
 
     def _desenhar_sequencias_base(self):
         movimentos_base = self.timeline.sequencia_base
         for i, movimento in enumerate(movimentos_base):
-            label_movimento = self.font.render(f"{i + 1}: {movimento}", True, (255, 255, 255))
+            label_movimento = self.font.render(f"{i + 1}: {movimento}", True, self.font_color)
             self.screen.blit(label_movimento, (self.margem_x + 200, self.margem_y + 100 + i * self.espacamento_linha))
 
 class PlayerRenderer:
@@ -109,11 +111,16 @@ class PlayerRenderer:
         self.desenhar_base(base_atual, pos_x, pos_y)
 
     def _calcular_variacoes(self, guarda_atual, base_atual, largura_img, altura_img):
-        var_x = -largura_img * (1 / 256)
+        var_x = 0#-largura_img * (1 / 256)
         var_y = -altura_img + (1 / 8) * altura_img
 
         if base_atual not in ["base_parado", "base_chute"]:
             var_y = -(3 / 4) * altura_img
+        
+        if base_atual == "base_agachado":
+            var_x += largura_img * (0 / 256)
+        if base_atual == "base_parado":
+            var_x = -largura_img * (2 / 256)
         if base_atual == "base_kokutsu":
             var_x = -largura_img * (67 / 256)
         if base_atual == "base_zenkutsu":
@@ -122,12 +129,11 @@ class PlayerRenderer:
             var_x = largura_img * (0)
         if base_atual == "base_chute":
             var_x = largura_img * (0 / 64)
+        
         if base_atual == "chute_frente":
             var_x += -largura_img * (11 / 64)
         if base_atual == "chute_lateral":
             var_x += -largura_img * (65 / 256)
-        if base_atual == "base_agachado":
-            var_x += largura_img * (1 / 256)
 
         if guarda_atual in ["guarda_defesa_alto", "guarda_defesa_baixo"]:
             var_x += largura_img * (1 / 64)

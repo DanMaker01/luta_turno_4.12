@@ -5,10 +5,14 @@ from timeline import Timeline
 from resources import ResourceLoader
 from game_logic import GameLogic
 from renderer import Renderer
-from event_handler import EventHandler
+import os
 
+# Define a posição da janela (x, y)
+os.environ['SDL_VIDEO_WINDOW_POS'] = "0,32"
 class Game:
     def __init__(self, width=640, height=480):
+
+        
         pygame.init()
         pygame.display.set_caption("Jogo luta em turno")
         self.WIDTH = width
@@ -50,14 +54,21 @@ class Game:
         self.database = database.Database()
         self.recursos = ResourceLoader()
 
-        self.event_handler = EventHandler(self.detector)
-        self.logic = GameLogic(self.timeline)
-        self.renderer = Renderer(self.screen, self.font, self.recursos, self.timeline, self.database,self.detector,width,height)
+        self.logic = GameLogic(self.timeline, self.database)
+        self.renderer = Renderer(self.screen, self.font, self.recursos, self.timeline, self.database, self.detector, width, height)
         self.clock = pygame.time.Clock()
+        self.running = True
+
+    def handle_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+            elif event.type == pygame.KEYDOWN:
+                self.detector.handle_keydown(event.key)
 
     def run(self):
-        while self.event_handler.running:
-            self.event_handler.handle_events()
+        while self.running:
+            self.handle_events()
             comando, tempo_entre_comandos = self.detector.check_sequences()
             if comando:  # se a sequência for detectada
                 self.timeline.pilha_add(comando)

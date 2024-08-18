@@ -1,6 +1,7 @@
 import database
 # import input
 import dijkstra
+import numpy as np
 
 class Timeline:
     def __init__(self):
@@ -10,7 +11,7 @@ class Timeline:
         self.linha_guarda = ["guarda_parado"]
         self.linha_base = ["base_parado"]
 
-        self.contagem_cena = 1
+        self.contagem_cenas = 1
 
         self.sequencia_guarda = []
         self.sequencia_base = []
@@ -39,13 +40,13 @@ class Timeline:
         cena = []
 
         #tempo
-        cena.append(self.contagem_cena)
-        self.contagem_cena+=1
+        cena.append(self.contagem_cenas)
+        self.contagem_cenas+=1
         
         #posicao
         if len(self.sequencia_posicao) > 0:
             novo_movimento = self.sequencia_posicao.pop(0)
-            cena.append(novo_movimento) # CORRGIR @@@@@@@@@@@@@
+            cena.append(self.linha_posicao[-1]+novo_movimento) 
         else:
             cena.append(self.linha_posicao[-1])
         
@@ -63,14 +64,14 @@ class Timeline:
             cena.append(self.linha_base[-1])
             
         return cena
-    def get_cena(self, indice):
+    def get_cena(self, indice): #implementar
         tamanho_timeline = len(self.linha_tempo)
         if(indice > tamanho_timeline):
-            return None
+            return None #está tentando pegar um tempo que nao existe ainda
         else:
             cena = []
             cena.append(self.linha_tempo[indice])
-            cena.append(self.linha_posicao[indice])
+            cena.append(np.around(self.linha_posicao[indice],4)) #está arredondado em 4 digitos apos virgula, espero que dê bom
             cena.append(self.linha_guarda[indice])
             cena.append(self.linha_base[indice])
             return cena
@@ -80,16 +81,22 @@ class Timeline:
         self.linha_guarda.append(cena[2])
         self.linha_base.append(cena[3])
     def verificar_efeitos_da_acao(self):
+        #pegar ultima e penultima cenas
         ultima_cena = self.get_cena(-1)
         ultima_postura = [ultima_cena[2],ultima_cena[3]]
-
         penultima_cena = self.get_cena(-2)
         penultima_postura = [penultima_cena[2],penultima_cena[3]]
 
         if ultima_postura != penultima_postura:
-            # print("se moveu!!")
+            print("moveu:")
+            print(penultima_cena)
+            print(ultima_cena)
             pass
 
+
+
+
+        #
     
     def addTimeline(self):
         cena = self.criar_proxima_cena()
@@ -140,16 +147,15 @@ class Timeline:
         menor_sequencia = [(self.database.ESTADOS_GUARDA[indice]) for indice in indices_menor_sequencia]
         menor_sequencia_com_pausas = self.adicionar_pausas_na_sequencia(self.database.MATRIZ_TRANSICAO_GUARDA,menor_sequencia)
         self.aplicar_sequencia_guarda(menor_sequencia_com_pausas)
-        
+    
     def aplicar_sequencia_guarda(self,menor_sequencia):
         self.sequencia_guarda = menor_sequencia # aloca a sequencia gerada no self.sequencia_guarda
-    def aplicar_sequencia_base(self,menor_sequencia):
+    def aplicar_sequencia_base(self,menor_sequencia): #implementar
         self.sequencia_base = menor_sequencia # aloca a sequencia gerada no self.sequencia_base
 
     #vai ser editada, pois dependendo da base, o movimento vai ser diferente, etc, tem movimento que tem recoil
     def definir_sequencia_ataque(self, string_movimento):
         base_atual = self.linha_base[-1]
-        # print("base:", base_atual)
         
         if(base_atual == "base_chute"): # se estiver na base de chute, sai chute.
             if string_movimento == "ataque_leve":
@@ -167,6 +173,49 @@ class Timeline:
             self.definir_sequencia_completa_guarda(string_movimento) #guarda
         pass
 
+    def definir_sequencia_movimento(self, string_movimento): #implementar
+        vel_passo = [1,3,2,1] #soma 7
+        vel_passo2 = [1,3,2,1] #soma 7
+        vel_ameaça = [1,3,-1,-2,-1] #soma 0
+
+        base_atual = self.linha_base[-1]
+        if base_atual == "base_agachado":
+            vel_passo = [1/2,2/2,2/2,1/2]
+            vel_passo2 = [0,0,0,0] #nao da pra correr agachado
+
+
+        if string_movimento == "mover_esquerda":
+            for i in vel_passo:
+                self.sequencia_posicao.append(-i/14)
+            
+        if string_movimento == "mover_direita":
+            for i in vel_passo:
+                self.sequencia_posicao.append(i/14)
+            
+        if string_movimento == "mover_direita2":
+            for i in vel_passo2:
+                self.sequencia_posicao.append(i/6)
+            
+        if string_movimento == "mover_esquerda2":
+            for i in vel_passo2:
+                self.sequencia_posicao.append(-i/6)
+            
+        if string_movimento == "mover_direita_esquerda":
+            for i in vel_ameaça:
+                self.sequencia_posicao.append(i/6)
+            
+        if string_movimento == "mover_esquerda_direita":
+            for i in vel_ameaça:
+                self.sequencia_posicao.append(-i/6)
+            
+        
+        if string_movimento == "mover_strafe_cima":
+            print("mover strafe cima, implementar")
+        if string_movimento == "mover_strafe_baixo":
+            print("mover strafe baixo, implementar")
+        pass
+        
+        
     # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = 
     # FUNÇÔES RELEVANTES    
     # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = 
@@ -176,29 +225,20 @@ class Timeline:
             string_movimento = self.database.check_movements(movimento_a_executar)
             print("string_movimento:",string_movimento)
             tipo = self.selecionar_tipo_movimento(string_movimento)
-            # print("tipo",tipo)
+            
             if tipo == "ataque": #chute ou soco
                 self.definir_sequencia_ataque(string_movimento)
-                # print("sequencia_guarda:",self.sequencia_guarda)
-                # print("sequencia_base:",self.sequencia_base)
-                pass
             elif (tipo == "guarda"): #defesa
                 self.definir_sequencia_completa_guarda(string_movimento)
-                # print("sequencia_guarda:",self.sequencia_guarda)
-                
-                pass
             elif (tipo == "base"):
                 self.definir_sequencia_completa_base(string_movimento)
-                # print("sequencia_base:",self.sequencia_base)
-                pass
             elif tipo == "mover":
-                print("apertou \"movimento\", falta implementar @@@@@@@@")
+                self.definir_sequencia_movimento(string_movimento)
         else:
             pass # não ha movimentos no buffer
 
     def selecionar_tipo_movimento(self,string_movimento):
         if string_movimento:
-
             if string_movimento.startswith("base"):
                 return "base"
             if string_movimento.startswith("guarda"):
@@ -213,6 +253,7 @@ class Timeline:
         self.selecionar_tipo_do_movimento_e_alocar_sequencia()
         # self.executar_movimentos()
         pass
+
 
 
 
