@@ -5,10 +5,10 @@ import pygame
 # IMPLEMENTAR: 
 # sistema de detectar sequencias melhor.
 # como está atualmente: a cada frame o buffer de input é lido, se houver itens, verifica se há alguma sequencia, se houver, add ela na pilha de comandos. 
-# como deve ser: ao apertar uma tecla inicia-se uma contagem, adiciona-se a tecla no buffer e verifica se há uma sequencia válida. após o contador o buffer zera.
+# como deve ser: ao apertar uma tecla inicia-se uma contagem, adiciona-se a tecla no buffer e verifica se há uma sequencia válida. após o contador o buffer zera. se houverem 2+ sequencis disjuntas, faça elas em paralelo.
 
 class KeySequenceDetector:
-    def __init__(self, predefined_sequences, key_interval_max=0.175):
+    def __init__(self, predefined_sequences, key_interval_max=0.185):
         self.predefined_sequences = predefined_sequences
         self.keys_pressed = []
         self.key_times = []

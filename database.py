@@ -1,6 +1,6 @@
 
 class Database:
-    TEMPO = 6 # a cada 5 frames atualiza-se o jogo
+    TEMPO = 5 # a cada 5 frames atualiza-se o jogo
     # controlar o tempo de atualização do jogo
     # tempo de atualização
 
@@ -44,6 +44,9 @@ class Database:
     ]
     
     MOVEMENTS_COMANDS = { #implementar: acertar o formato padrão
+        "postura_g_b": ['a','a','z','z'],
+        "postura_b_g": ['z','z','a','a'],
+
         "base_agachado" :     ['z','z'],
         "base_zenkutsu" :   ['z','right'],
         "base_kokutsu" :    ['z','left'],
@@ -53,6 +56,7 @@ class Database:
         "guarda_guarda" :       ['a','a'],
         "guarda_defesa_alto" :  ['a','up'],
         "guarda_defesa_baixo" : ['a','down'],
+
         
         "ataque_leve" :     ['a','right'],
         "ataque_pesado" :   ['a','left'],

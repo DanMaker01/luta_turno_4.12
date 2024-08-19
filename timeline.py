@@ -80,15 +80,14 @@ class Timeline:
         self.linha_posicao.append(cena[1])
         self.linha_guarda.append(cena[2])
         self.linha_base.append(cena[3])
-    def verificar_efeitos_da_acao(self):
+    def verificar_efeitos_da_acao(self): #implementar
         #pegar ultima e penultima cenas
         ultima_cena = self.get_cena(-1)
         ultima_postura = [ultima_cena[2],ultima_cena[3]]
         penultima_cena = self.get_cena(-2)
         penultima_postura = [penultima_cena[2],penultima_cena[3]]
 
-        if ultima_postura != penultima_postura:
-            print("moveu:")
+        if ultima_postura != penultima_postura:# moveu!!
             print(penultima_cena)
             print(ultima_cena)
             pass
@@ -136,23 +135,18 @@ class Timeline:
             
         return sequencia_com_pausas
 
-    def definir_sequencia_completa_base(self, string_movimento):
+    def gerar_sequencia_completa_base(self, string_movimento):
         indices_menor_sequencia = self.gerar_sequencia_base(string_movimento)[1] #gera a menor sequencia
         menor_sequencia = [(self.database.ESTADOS_BASE[indice]) for indice in indices_menor_sequencia]
         menor_sequencia_com_pausas = self.adicionar_pausas_na_sequencia(self.database.MATRIZ_TRANSICAO_BASE,menor_sequencia)
         # menor_sequencia_com_pausas_e_rikite = self.adicionar_rikite_na_sequencia(menor_sequencia_com_pausas) # implementar@@@@
-        self.aplicar_sequencia_base(menor_sequencia_com_pausas) # aloca a sequencia gerada no self.sequencia_base 
-    def definir_sequencia_completa_guarda(self, string_movimento):
+        return menor_sequencia_com_pausas # aloca a sequencia gerada no self.sequencia_base 
+    def gerar_sequencia_completa_guarda(self, string_movimento):
         indices_menor_sequencia = (self.gerar_sequencia_guarda(string_movimento))[1] #gera a menor sequencia
         menor_sequencia = [(self.database.ESTADOS_GUARDA[indice]) for indice in indices_menor_sequencia]
         menor_sequencia_com_pausas = self.adicionar_pausas_na_sequencia(self.database.MATRIZ_TRANSICAO_GUARDA,menor_sequencia)
-        self.aplicar_sequencia_guarda(menor_sequencia_com_pausas)
+        return menor_sequencia_com_pausas
     
-    def aplicar_sequencia_guarda(self,menor_sequencia):
-        self.sequencia_guarda = menor_sequencia # aloca a sequencia gerada no self.sequencia_guarda
-    def aplicar_sequencia_base(self,menor_sequencia): #implementar
-        self.sequencia_base = menor_sequencia # aloca a sequencia gerada no self.sequencia_base
-
     #vai ser editada, pois dependendo da base, o movimento vai ser diferente, etc, tem movimento que tem recoil
     def definir_sequencia_ataque(self, string_movimento):
         base_atual = self.linha_base[-1]
@@ -163,50 +157,51 @@ class Timeline:
             else:           #então é ataque_forte
                 string_movimento = "chute_lateral"
             
-            self.definir_sequencia_completa_base(string_movimento) #base
+            self.sequencia_base = self.gerar_sequencia_completa_base(string_movimento) #base
         else: #então é soco
             if string_movimento == "ataque_leve":
                 string_movimento = "soco_frente"
             else:           #então é ataque_forte
                 string_movimento = "soco_tras"
            
-            self.definir_sequencia_completa_guarda(string_movimento) #guarda
+            self.sequencia_guarda = self.gerar_sequencia_completa_guarda(string_movimento) #guarda
         pass
 
     def definir_sequencia_movimento(self, string_movimento): #implementar
-        vel_passo = [1,3,2,1] #soma 7
-        vel_passo2 = [1,3,2,1] #soma 7
-        vel_ameaça = [1,3,-1,-2,-1] #soma 0
+        vel_passo = [1,3,3,2,1,1] #soma 7
+        vel_passo2 = [1,3,3,2,1,1] #soma 7
+        vel_ameaça = [1,3,1,0,-1,-3,-1] #soma 0
 
         base_atual = self.linha_base[-1]
         if base_atual == "base_agachado":
-            vel_passo = [1/2,2/2,2/2,1/2]
-            vel_passo2 = [0,0,0,0] #nao da pra correr agachado
+            
+            vel_passo = [i/2 for i in vel_passo]
+            vel_passo2 = [0 for i in vel_passo2] #nao da pra correr agachado
 
 
         if string_movimento == "mover_esquerda":
             for i in vel_passo:
-                self.sequencia_posicao.append(-i/14)
+                self.sequencia_posicao.append(-i/15)
             
         if string_movimento == "mover_direita":
             for i in vel_passo:
-                self.sequencia_posicao.append(i/14)
+                self.sequencia_posicao.append(i/15)
             
         if string_movimento == "mover_direita2":
             for i in vel_passo2:
-                self.sequencia_posicao.append(i/6)
+                self.sequencia_posicao.append(i/7)
             
         if string_movimento == "mover_esquerda2":
             for i in vel_passo2:
-                self.sequencia_posicao.append(-i/6)
+                self.sequencia_posicao.append(-i/7)
             
         if string_movimento == "mover_direita_esquerda":
             for i in vel_ameaça:
-                self.sequencia_posicao.append(i/6)
+                self.sequencia_posicao.append(i/7)
             
         if string_movimento == "mover_esquerda_direita":
             for i in vel_ameaça:
-                self.sequencia_posicao.append(-i/6)
+                self.sequencia_posicao.append(-i/7)
             
         
         if string_movimento == "mover_strafe_cima":
@@ -214,10 +209,24 @@ class Timeline:
         if string_movimento == "mover_strafe_baixo":
             print("mover strafe baixo, implementar")
         pass
+
+    def definir_sequencia_postura(self, string_movimento):
+        print("postura:",string_movimento)
+        if string_movimento == "postura_g_b":
+            self.sequencia_guarda = self.gerar_sequencia_completa_guarda("guarda_guarda")   
+            #adicionar um frame antes da sequencia base     
+            print(string_movimento)
+            self.sequencia_base = self.gerar_sequencia_completa_base("base_agachado")
+        if string_movimento == "postura_b_g":
+            self.sequencia_base = self.gerar_sequencia_completa_base("base_agachado")
+            #falta adicionar um tempo extra na sequencia de guarda
+            self.sequencia_guarda = self.gerar_sequencia_completa_guarda("guarda_guarda")
+        pass
         
+
         
     # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = 
-    # FUNÇÔES RELEVANTES    
+    # FUNÇÔES MAIS GERAIS
     # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = # = 
     def selecionar_tipo_do_movimento_e_alocar_sequencia(self): #implementar, pra ter CANCEL, a cada comando deve-se criar uma sequencia baseado no ultimo estado que você está
         movimento_a_executar = self.pilha_pop()
@@ -226,14 +235,17 @@ class Timeline:
             print("string_movimento:",string_movimento)
             tipo = self.selecionar_tipo_movimento(string_movimento)
             
-            if tipo == "ataque": #chute ou soco
-                self.definir_sequencia_ataque(string_movimento)
+            if tipo == "postura":
+                print("postura!!!")
+                self.definir_sequencia_postura(string_movimento) #ao inves de definir, apenas gerar
+            elif tipo == "ataque": #chute ou soco
+                self.definir_sequencia_ataque(string_movimento) #ao invés de definir, apenas gerar
             elif (tipo == "guarda"): #defesa
-                self.definir_sequencia_completa_guarda(string_movimento)
+                self.sequencia_guarda = self.gerar_sequencia_completa_guarda(string_movimento) #ok
             elif (tipo == "base"):
-                self.definir_sequencia_completa_base(string_movimento)
+                self.sequencia_base = self.gerar_sequencia_completa_base(string_movimento) #ok
             elif tipo == "mover":
-                self.definir_sequencia_movimento(string_movimento)
+                self.definir_sequencia_movimento(string_movimento) #ao inves de definir, apenas gerar
         else:
             pass # não ha movimentos no buffer
 
@@ -247,6 +259,8 @@ class Timeline:
                 return "ataque"
             if string_movimento.startswith("mover"):
                 return "mover" 
+            if string_movimento.startswith("postura"):
+                return "postura"
         else:
             pass # 
     def update(self):
