@@ -1,6 +1,6 @@
 
 class Database:
-    TEMPO = 5 # a cada 5 frames atualiza-se o jogo
+    TEMPO = 6 # a cada 5 frames atualiza-se o jogo
     # controlar o tempo de atualização do jogo
     # tempo de atualização
 
@@ -17,13 +17,13 @@ class Database:
     
     MATRIZ_TRANSICAO_BASE = [ #8x8 (numeros de estados base)
         [0,4,0,0,0,0,0,0], 
-        [2,0,6,4,4,6,0,0],
-        [2,2,0,0,0,0,0,0],
-        [2,2,0,0,0,0,0,0],
-        [2,4,0,0,0,0,0,0],
-        [2,2,4,6,4,0,2,4],
-        [2,0,0,0,0,2,0,0],
-        [2,0,0,0,0,2,0,0]
+        [3,0,6,4,4,6,0,0],
+        [3,2,0,0,0,0,0,0],
+        [3,2,0,0,0,0,0,0],
+        [3,4,0,0,0,0,0,0],
+        [3,2,4,6,4,0,2,4],
+        [3,0,0,0,0,2,0,0],
+        [3,0,0,0,0,2,0,0]
     ]
 
     
@@ -36,11 +36,11 @@ class Database:
 
     MATRIZ_TRANSICAO_GUARDA = [ #6x6 
         [0,3,0,0,0,0],
-        [2,0,2,4,6,6],
-        [2,2,0,0,0,0],
-        [2,2,0,0,0,0],
-        [2,2,0,0,0,0],
-        [2,2,0,0,0,0]
+        [3,0,2,4,6,6],
+        [3,2,0,0,0,0],
+        [3,2,0,0,0,0],
+        [3,2,0,0,0,0],
+        [3,2,0,0,0,0]
     ]
     
     MOVEMENTS_COMANDS = { # é necessario ordenar por tamanho de sequencia, decrescente

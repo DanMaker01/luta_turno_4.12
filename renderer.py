@@ -115,14 +115,14 @@ class PlayerRenderer:
         var_y = -altura_img + (1 / 8) * altura_img
 
         if base_atual not in ["base_parado", "base_chute"]:
-            var_y = -(3 / 4) * altura_img
+            var_y = -(5 / 8) * altura_img
         
         if base_atual == "base_agachado":
             var_x += largura_img * (0 / 256)
         if base_atual == "base_parado":
             var_x = -largura_img * (2 / 256)
         if base_atual == "base_kokutsu":
-            var_x = -largura_img * (67 / 256)
+            var_x = -largura_img * (68 / 256)
         if base_atual == "base_zenkutsu":
             var_x = largura_img * (0 / 64)
         if base_atual == "base_cavaleiro":
@@ -131,7 +131,7 @@ class PlayerRenderer:
             var_x = largura_img * (0 / 64)
         
         if base_atual == "chute_frente":
-            var_x += -largura_img * (11 / 64)
+            var_x += -largura_img * (46 / 256)
         if base_atual == "chute_lateral":
             var_x += -largura_img * (65 / 256)
 

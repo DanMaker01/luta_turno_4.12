@@ -20,15 +20,15 @@ A, seta: mudar guarda
 
 Exemplo: 
 
-A + "seta direita"  --> atacar com "soco leve"; se tiver na base de chute ataca com "chute frontal"
+A + --> : atacar com "soco leve"; se tiver na base de chute ataca com "chute frontal"
 
-Z + "seta direita"  --> mudar base para "zenkutsu" (arqueiro) 
+Z + --> : mudar base para "zenkutsu" (arqueiro) 
 
-A + A               --> mudar guarda para "em guarda"
+A, A    : mudar guarda para "em guarda"
 
-A,Z,A,Z             --> mudar base e guarda para "parado"
+A,Z,A,Z : mudar base e guarda para "parado"
 
-
+A + Z   :
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 À FAZER:
