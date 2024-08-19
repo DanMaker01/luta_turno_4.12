@@ -221,6 +221,9 @@ class Timeline:
             self.sequencia_base = self.gerar_sequencia_completa_base("base_agachado")
             #falta adicionar um tempo extra na sequencia de guarda
             self.sequencia_guarda = self.gerar_sequencia_completa_guarda("guarda_guarda")
+        if string_movimento in ["postura_para","postura_para2"]:
+            self.sequencia_base = self.gerar_sequencia_completa_base("base_parado")
+            self.sequencia_guarda = self.gerar_sequencia_completa_guarda("guarda_parado")
         pass
         
 

@@ -27,6 +27,7 @@ class KeySequenceDetector:
         self.last_key_time = current_time
 
     def check_sequences(self):
+        
         if not self.last_key_time: # Verifique se a lista de teclas pressionadas ainda é vazia
             return None, None # Retorna None se nenhuma sequência for detectada
         
@@ -34,6 +35,7 @@ class KeySequenceDetector:
         if (current_time - self.last_key_time) >= self.key_interval_max: # Verifique se o intervalo de tempo ultrapassou o limite
             # Verifique as sequências antes de resetar 
             buffer_length = len(self.keys_pressed) # Tamanho da lista de teclas pressionadas
+            
             for sequence in self.predefined_sequences: # Percorra as sequências predefinidas
                 if self.is_sequence(sequence, buffer_length): # Verifique se a sequência atual corresponde a uma sequência predefinida
                     sequencia, intervalos = self.handle_sequence_detected(sequence) # Sequência detectada

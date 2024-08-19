@@ -20,38 +20,13 @@ class Game:
         self.screen = pygame.display.set_mode((width, height))
         self.font = pygame.font.SysFont(None, 20)
 
-        self.predefined_sequences = [
-            # 3 teclas
-            ['a', 'a', 'a'],
-
-            # 2 teclas
-            ['a', 'a'],
-            ['a', 'left'],
-            ['a', 'right'],
-            ['a', 'up'],
-            ['a', 'down'],
-
-            ['z', 'z'],
-            ['z', 'left'],
-            ['z', 'right'],
-            ['z', 'up'],
-            ['z', 'down'],
-
-            ['left', 'left'],
-            ['right', 'right'],
-            ['left', 'right'],
-            ['right', 'left'],
-            
-            # 1 tecla
-            ['left'],
-            ['right'],
-            ['up'],
-            ['down'],
-        ]
-
-        self.detector = KeySequenceDetector(self.predefined_sequences)
-        self.timeline = Timeline()
         self.database = database.Database()
+
+        self.movimentos_possiveis = self.database.MOVEMENTS_COMANDS.values()
+        
+
+        self.detector = KeySequenceDetector(self.movimentos_possiveis)
+        self.timeline = Timeline()
         self.recursos = ResourceLoader()
 
         self.logic = GameLogic(self.timeline, self.database)

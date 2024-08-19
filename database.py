@@ -43,9 +43,14 @@ class Database:
         [2,2,0,0,0,0]
     ]
     
-    MOVEMENTS_COMANDS = { #implementar: acertar o formato padrão
+    MOVEMENTS_COMANDS = { # é necessario ordenar por tamanho de sequencia, decrescente
+        # tamanho 4
         "postura_g_b": ['a','a','z','z'],
         "postura_b_g": ['z','z','a','a'],
+
+        # tamanho 2
+        "postura_para": ['z','a'],
+        "postura_para2": ['a','z'],
 
         "base_agachado" :     ['z','z'],
         "base_zenkutsu" :   ['z','right'],
@@ -61,15 +66,18 @@ class Database:
         "ataque_leve" :     ['a','right'],
         "ataque_pesado" :   ['a','left'],
 
+        "mover_direita2" :          ['right','right'],
+        "mover_esquerda2":          ['left','left'],
+        "mover_esquerda_direita" :  ['left','right'],
+        "mover_direita_esquerda" :  ['right','left'],
+
+        #tamanho 1
         "mover_esquerda" :      ['left'],
         "mover_direita" :       ['right'],
         "mover_strafe_cima" :   ['up'],
         "mover_strafe_baixo" :  ['down'],
 
-        "mover_direita2" :          ['right','right'],
-        "mover_esquerda2":          ['left','left'],
-        "mover_esquerda_direita" :  ['left','right'],
-        "mover_direita_esquerda" :  ['right','left'],
+
     }
 
     def check_movements(self, sequence):
