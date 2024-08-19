@@ -4,7 +4,7 @@
 - https://github.com/DanMaker01/luta_turno
 - DanMaker01
 - 2024
-- alfa 4.7
+- alfa 4.12
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 OBJETIVO:
@@ -20,6 +20,7 @@ Exemplo:
 A + "seta direita" --> atacar com "soco leve"; se tiver na base de chute ataca com "chute frontal"
 Z + "seta direita" --> mudar base para "zenkutsu" (arqueiro) 
 A + A --> mudar guarda para "em guarda"
+A,Z,A,Z --> mudar base e guarda para "parado"
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 À FAZER:
