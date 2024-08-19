@@ -90,6 +90,9 @@ class Timeline:
         if ultima_postura != penultima_postura:# moveu!!
             print(penultima_cena)
             print(ultima_cena)
+            # mini_linha_base = 
+            #calcular dano tbm, dano = fator_dano*delta_posicao
+            #bonus no dano se for em uma base
             pass
 
 
