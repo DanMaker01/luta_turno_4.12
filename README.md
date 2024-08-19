@@ -8,10 +8,12 @@
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 OBJETIVO:
+
 Testar a mecânica de sistema de luta em turno. Passar a sensação de ritmo de uma luta, com movimentação, ataque, defesa, antecipação, warmup/cooldown e gingado.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 CONTROLES:
+
 Setas: movimentar, escolher entre movimentos
 Z, seta: mudar base
 A, seta: mudar guarda
@@ -30,6 +32,7 @@ A,Z,A,Z             --> mudar base e guarda para "parado"
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 À FAZER:
+
 1. implementar mais estados de guarda e base
 2. ao esgotar o tempo entre botões, verificar o buffer, se houver mais de um comando, fazer os dois
 3. aplicar bonus caso as 3 ultimas cenas estejam na lista de sequencias bonificadoras
