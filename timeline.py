@@ -11,7 +11,7 @@ class Timeline:
         self.linha_guarda = ["guarda_parado"]
         self.linha_base = ["base_parado"]
 
-        self.contagem_cenas = 1
+        self.contagem_cenas = 0
 
         self.sequencia_guarda = []
         self.sequencia_base = []
@@ -40,24 +40,25 @@ class Timeline:
         cena = []
 
         #tempo
-        cena.append(self.contagem_cenas)
         self.contagem_cenas+=1
+        cena.append(self.contagem_cenas)
         
-        #posicao
+        #se há algo na sequencia de posicao
         if len(self.sequencia_posicao) > 0:
-            novo_movimento = self.sequencia_posicao.pop(0)
-            cena.append(self.linha_posicao[-1]+novo_movimento) 
+            mudanca_posicao = self.sequencia_posicao.pop(0) #retira a proxima acao da sequencia e 
+            posicao_final = mudanca_posicao + self.linha_posicao[-1] #aplica a mudança na posicao atual 
+            cena.append(self.limitar_a_posicao(posicao_final)) #limita para o personagem não sair da tela
         else:
             cena.append(self.linha_posicao[-1])
         
-        #guarda
+        #se há algo na sequencia de guarda
         if len(self.sequencia_guarda) > 0:
             # nova_guarda = 
             cena.append(self.sequencia_guarda.pop(0))
         else:
             cena.append(self.linha_guarda[-1])
         
-        #base
+        #se existe algo na sequencia de base
         if len(self.sequencia_base) > 0:
             cena.append(self.sequencia_base.pop(0))
         else:
@@ -71,7 +72,7 @@ class Timeline:
         else:
             cena = []
             cena.append(self.linha_tempo[indice])
-            cena.append(np.around(self.linha_posicao[indice],4)) #está arredondado em 4 digitos apos virgula, espero que dê bom
+            cena.append(np.around(self.linha_posicao[indice],8)) #está arredondado em 4 digitos apos virgula, espero que dê bom
             cena.append(self.linha_guarda[indice])
             cena.append(self.linha_base[indice])
             return cena
@@ -80,23 +81,29 @@ class Timeline:
         self.linha_posicao.append(cena[1])
         self.linha_guarda.append(cena[2])
         self.linha_base.append(cena[3])
+   
+    def limitar_a_posicao(self, posicao):
+        max = 4
+        min = 0
+        if posicao <= min:
+            posicao = min
+        if posicao >= max:
+            posicao = max
+        return posicao
     def verificar_efeitos_da_acao(self): #implementar
         #pegar ultima e penultima cenas
         ultima_cena = self.get_cena(-1)
-        ultima_postura = [ultima_cena[2],ultima_cena[3]]
+        ultimo_estado_player = [ultima_cena[1],ultima_cena[2],ultima_cena[3]]
         penultima_cena = self.get_cena(-2)
-        penultima_postura = [penultima_cena[2],penultima_cena[3]]
+        penultimo_estado_player = [penultima_cena[1], penultima_cena[2],penultima_cena[3]]
 
-        if ultima_postura != penultima_postura:# moveu!!
+        if ultimo_estado_player != penultimo_estado_player:# moveu!!
+            # print(penultima_cena)
             print(penultima_cena)
-            print(ultima_cena)
             # mini_linha_base = 
             #calcular dano tbm, dano = fator_dano*delta_posicao
             #bonus no dano se for em uma base
             pass
-
-
-
 
         #
     
@@ -170,9 +177,9 @@ class Timeline:
         pass
 
     def definir_sequencia_movimento(self, string_movimento): #implementar, fazer funções de gerar a sequencia mais modulares.
-        vel_passo = [1,3,3,2,1,1] #soma 11
-        vel_passo2 = [1,3,3,2,1,1] #soma 11
-        vel_ameaça = [1,3,1,0,-1,-3,-1] #soma 0
+        vel_passo = [0,3,2,1,0] #soma 11
+        vel_passo2 = [0,3,3,2,1,0] #soma 11
+        vel_ameaça = [0,3,1,0,-3,-1,0] #soma 0
 
         #dependendo da base:
         base_atual = self.linha_base[-1]
@@ -180,13 +187,13 @@ class Timeline:
             vel_passo = [i/2 for i in vel_passo]
             vel_passo2 = [0 for i in vel_passo2] #nao da pra correr agachado
         
-        #criar sequencia:
+        #criar sequencia e colocar ela disponível para a cena pegar a sequencia
         if string_movimento == "mover_esquerda":
             for i in vel_passo:
-                self.sequencia_posicao.append(-i/15)
+                self.sequencia_posicao.append(-i/13)
         if string_movimento == "mover_direita":
             for i in vel_passo:
-                self.sequencia_posicao.append(i/15)
+                self.sequencia_posicao.append(i/13)
         if string_movimento == "mover_direita2":
             for i in vel_passo2:
                 self.sequencia_posicao.append(i/7)
@@ -195,15 +202,17 @@ class Timeline:
                 self.sequencia_posicao.append(-i/7)
         if string_movimento == "mover_direita_esquerda":
             for i in vel_ameaça:
-                self.sequencia_posicao.append(i/7)
+                self.sequencia_posicao.append(i/8)
         if string_movimento == "mover_esquerda_direita":
             for i in vel_ameaça:
-                self.sequencia_posicao.append(-i/7)
+                self.sequencia_posicao.append(-i/8)
+        #implementar
         if string_movimento == "mover_strafe_cima":
-            print("mover strafe cima, implementar")
+            print("mover strafe cima, implementar!")
         if string_movimento == "mover_strafe_baixo":
-            print("mover strafe baixo, implementar")
-        pass
+            print("mover strafe baixo, implementar!")
+        
+        pass #gerou a sequencia e colocou ela na timeline correspondente
 
     def definir_sequencia_postura(self, string_movimento):
         print("postura:",string_movimento)

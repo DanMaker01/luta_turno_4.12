@@ -32,6 +32,7 @@ class HUDRenderer:
         # Renderizar guarda e base atual
         self._desenhar_guarda_atual()
         self._desenhar_base_atual()
+        self._desenhar_posicao_atual()
         # Renderizar buffer de teclas apertadas
         self._desenhar_buffer_teclas()
         # Renderizar sequências de guarda e base
@@ -51,6 +52,7 @@ class HUDRenderer:
         )
         self.screen.blit(label_linha_guarda, (self.margem_x, self.margem_y + self.espacamento_linha))
 
+
     def _desenhar_base_atual(self):
         base_atual_text = self.timeline.get_ultima_base()
         label_linha_base = self.font.render(
@@ -58,10 +60,16 @@ class HUDRenderer:
             True, self.font_color
         )
         self.screen.blit(label_linha_base, (self.margem_x, self.margem_y + 2 * self.espacamento_linha))
+    def _desenhar_posicao_atual(self):
+        posicao_atual_text = self.timeline.get_ultima_posicao()
+        label_linha_posicao = self.font.render(
+            f"Posicao Atual: {posicao_atual_text}", True, self.font_color
+        )
+        self.screen.blit(label_linha_posicao, (self.margem_x, self.margem_y + self.espacamento_linha * 3))
 
     def _desenhar_buffer_teclas(self):
         label_buffer = self.font.render(f"Buffer: {self.input.get_keys_pressed()}", True, self.font_color)
-        self.screen.blit(label_buffer, (self.margem_x, self.margem_y + 3 * self.espacamento_linha))
+        self.screen.blit(label_buffer, (self.margem_x, self.margem_y + 4 * self.espacamento_linha))
 
     def _desenhar_sequencias_guarda(self):
         movimentos_guarda = self.timeline.sequencia_guarda

@@ -45,8 +45,8 @@ class Database:
     
     MOVEMENTS_COMANDS = { # é necessario ordenar por tamanho de sequencia, decrescente
         # tamanho 4
-        "postura_g_b": ['a','a','z','z'],
-        "postura_b_g": ['z','z','a','a'],
+        "postura_g_b": ['a','a','z'],
+        "postura_b_g": ['z','z','a'],
 
         # tamanho 2
         "postura_para": ['z','a'],
