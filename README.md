@@ -12,7 +12,7 @@
 
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 - Luta Turno
-- https://github.com/DanMaker01/luta_turno
+- https://github.com/DanMaker01/luta_turno_4.12
 - DanMaker01
 - 2024
 - alfa 4.12
